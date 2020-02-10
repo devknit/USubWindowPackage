@@ -1,0 +1,12 @@
+{
+    "name": "com.devknit.usubwindow",
+    "displayName": "USubWindow",
+    "version": "1.0.0",
+    "unity": "2018.4",
+    "description": "",
+    "keywords": [
+	],
+    "category": "Editor",
+    "dependencies": {
+    }
+}
