@@ -18,7 +18,7 @@ namespace EditorWinEx
 
                 Rect lockerRect = new Rect(rect.x, rect.y + rect.height - 18, rect.width, 18);
                 rect = new Rect(rect.x, rect.y, rect.width, rect.height - 18);
-                GUI.Box(lockerRect, string.Empty, GUIStyleCache.GetStyle("Toolbar"));
+                GUI.Box(lockerRect, string.Empty, EditorStyles.toolbar);
                 GUI.Box(new Rect(lockerRect.x + 20, lockerRect.y + 6, lockerRect.width - 40, lockerRect.height - 6), string.Empty,
                     GUIStyleCache.GetStyle("WindowBottomResize"));
                 EditorGUIUtility.AddCursorRect(lockerRect, MouseCursor.ResizeVertical);
@@ -40,7 +40,7 @@ namespace EditorWinEx
                 rect = new Rect(rect.x, rect.y, rect.width, rect.height * (1 - weight) - 9);
 
                 GUI.Box(drawRect, string.Empty, GUIStyleCache.GetStyle("WindowBackground"));
-                GUI.Box(lockerRect, string.Empty, GUIStyleCache.GetStyle("Toolbar"));
+                GUI.Box(lockerRect, string.Empty, EditorStyles.toolbar);
                 GUI.Box(new Rect(lockerRect.x + 20, lockerRect.y + 6, lockerRect.width - 40, lockerRect.height - 6), string.Empty,
                     GUIStyleCache.GetStyle("WindowBottomResize"));
                 if (weight <= 0.08f)

@@ -33,7 +33,7 @@ namespace EditorWinEx.Internal
             {
                 Rect h = new Rect(rect.x, rect.y, rect.width, 18);
                 rect = new Rect(rect.x, rect.y + 18, rect.width, rect.height - 18);
-                GUI.Box(h, string.Empty, GUIStyleCache.GetStyle("Toolbar"));
+                GUI.Box(h, string.Empty, EditorStyles.toolbar);
                 return h;
             }
             else if (toolBar == EWSubWindowToolbarType.Mini)

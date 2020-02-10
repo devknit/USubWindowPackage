@@ -97,7 +97,7 @@ namespace EditorWinEx.Internal
                     int treeIdValue = treeId.GetHashCode();
                     if (layoutTreeIDValue != treeIdValue)
                     {
-                        if (EditorUtility.DisplayDialog("Error", "The layout is different from the current form structure and cannot be used anymore. Is it deleted?", "Yes", "No"))
+					//	if (EditorUtility.DisplayDialog("Error", "The layout is different from the current form structure and cannot be used anymore. Is it deleted?", "Yes", "No"))
                         {
                             DeleteLayout(layoutName);
                         }

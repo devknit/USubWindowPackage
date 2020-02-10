@@ -90,43 +90,43 @@ public class GUIEx
             case EWSubWindowIcon.None:
                 return null;
             case EWSubWindowIcon.Animation:
-                return "d_UnityEditor.AnimationWindow";
+                return EditorGUIUtility.isProSkin ? "d_UnityEditor.AnimationWindow" : "UnityEditor.AnimationWindow";
             case EWSubWindowIcon.Animator:
                 return "UnityEditor.Graphs.AnimatorControllerTool";
             case EWSubWindowIcon.AssetStore:
-                return "Asset Store";
+                return EditorGUIUtility.isProSkin ? "d_Asset Store" : "Asset Store";
             case EWSubWindowIcon.AudioMixer:
-                return "Audio Mixer";
+                return EditorGUIUtility.isProSkin ? "d_Audio Mixer" : "Audio Mixer";
             case EWSubWindowIcon.Web:
-                return "BuildSettings.Web.Small";
+                return EditorGUIUtility.isProSkin ? "d_BuildSettings.Web.Small" : "BuildSettings.Web.Small";
             case EWSubWindowIcon.Console:
-                return "d_UnityEditor.ConsoleWindow";
+                return EditorGUIUtility.isProSkin ? "d_UnityEditor.ConsoleWindow" : "UnityEditor.ConsoleWindow";
             case EWSubWindowIcon.Game:
-                return "d_UnityEditor.GameView";
+                return EditorGUIUtility.isProSkin ? "d_UnityEditor.GameView" : "UnityEditor.GameView";
             case EWSubWindowIcon.Hierarchy:
-                return "UnityEditor.HierarchyWindow";
+                return EditorGUIUtility.isProSkin ? "d_UnityEditor.HierarchyWindow" : "UnityEditor.HierarchyWindow";
             case EWSubWindowIcon.Inspector:
-                return "d_UnityEditor.InspectorWindow";
+                return EditorGUIUtility.isProSkin ? "d_UnityEditor.InspectorWindow" : "UnityEditor.InspectorWindow";
             case EWSubWindowIcon.Lighting:
-                return "Lighting";
+                return EditorGUIUtility.isProSkin ? "d_Lighting" : "Lighting";
             case EWSubWindowIcon.Navigation:
-                return "Navigation";
+                return EditorGUIUtility.isProSkin ? "d_Navigation" : "Navigation";
             case EWSubWindowIcon.Occlusion:
-                return "Occlusion";
+                return EditorGUIUtility.isProSkin ? "d_Occlusion" : "Occlusion";
             case EWSubWindowIcon.Profiler:
-                return "d_UnityEditor.ProfilerWindow";
+                return EditorGUIUtility.isProSkin ? "d_ZUnityEditor.ProfilerWindow" : "UnityEditor.ProfilerWindow";
             case EWSubWindowIcon.Project:
-                return "Project";
+                return EditorGUIUtility.isProSkin ? "d_Project" : "Project";
             case EWSubWindowIcon.Scene:
-                return "d_UnityEditor.SceneView";
+                return EditorGUIUtility.isProSkin ? "d_UnityEditor.SceneView" : "UnityEditor.SceneView";
             case EWSubWindowIcon.BuildSetting:
-                return "BuildSettings.SelectedIcon";
+                return EditorGUIUtility.isProSkin ? "d_BuildSettings.SelectedIcon" : "BuildSettings.SelectedIcon";
             case EWSubWindowIcon.Shader:
                 return "Shader Icon";
             case EWSubWindowIcon.Avator:
                 return "Avatar Icon";
             case EWSubWindowIcon.GameObject:
-                return "GameObject Icon";
+                return EditorGUIUtility.isProSkin ? "d_GameObject Icon" : "GameObject Icon";
             case EWSubWindowIcon.Camera:
                 return "Camera Icon";
             case EWSubWindowIcon.JavaScript:
@@ -136,17 +136,17 @@ public class GUIEx
             case EWSubWindowIcon.Sprite:
                 return "Sprite Icon";
             case EWSubWindowIcon.Text:
-                return "AnimatorController Icon";
+                return "TextAsset Icon";
             case EWSubWindowIcon.AnimatorController:
-                return "cs Script Icon";
+                return "AnimatorController Icon";
             case EWSubWindowIcon.MeshRenderer:
                 return "MeshRenderer Icon";
             case EWSubWindowIcon.Terrain:
                 return "Terrain Icon";
             case EWSubWindowIcon.Audio:
-                return "SceneviewAudio";
+                return EditorGUIUtility.isProSkin ? "d_SceneviewAudio" : "SceneviewAudio";
             case EWSubWindowIcon.IPhone:
-                return "BuildSettings.iPhone.small";
+                return EditorGUIUtility.isProSkin ? "d_BuildSettings.iPhone.small" : "BuildSettings.iPhone.small";
             case EWSubWindowIcon.Font:
                 return "Font Icon";
             case EWSubWindowIcon.Material:
@@ -168,11 +168,11 @@ public class GUIEx
             case EWSubWindowIcon.Favorite:
                 return "Favorite Icon";
             case EWSubWindowIcon.Android:
-                return "BuildSettings.Android.small";
+                return EditorGUIUtility.isProSkin ? "d_BuildSettings.Android.small" : "BuildSettings.Android.small";
             case EWSubWindowIcon.Setting:
-                return "SettingsIcon";
+                return EditorGUIUtility.isProSkin ? "d_SettingsIcon" : "SettingsIcon";
             case EWSubWindowIcon.TimelineSelector:
-            	return "TimelineSelector";
+            	return EditorGUIUtility.isProSkin ? "d_TimelineSelector" : "TimelineSelector";
             default:
                 return null;
         }
