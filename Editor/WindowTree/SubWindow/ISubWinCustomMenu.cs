@@ -1,7 +1,10 @@
 ﻿
 using UnityEditor;
 
-public interface ISubWinCustomMenu
+namespace MDI.Editor
 {
-	void AddCustomMenu( GenericMenu menu);
+	public interface ISubWinCustomMenu
+	{
+		void AddCustomMenu( GenericMenu menu);
+	}
 }

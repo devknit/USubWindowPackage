@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace EditorWinEx.Internal
+namespace MDI.Editor.Internal
 {
 	internal class EWMsgBoxObjectDrawer : EWMsgBoxDrawer
 	{

@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using System.Reflection;
 
-namespace EditorWinEx.Internal
+namespace MDI.Editor.Internal
 {
 	internal class EWMsgBoxMethodDrawer : EWMsgBoxDrawer
 	{

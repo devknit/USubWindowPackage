@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System;
 
-namespace EditorWinEx.Internal
+namespace MDI.Editor.Internal
 {
 	[Serializable]
 	public struct EWRectangle

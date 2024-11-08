@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace EditorWinEx
+namespace MDI.Editor
 {
 	public abstract class EditorWindowComponentBase
 	{

@@ -1,15 +1,18 @@
 ﻿using System;
 
-[AttributeUsage( AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
-public class EWSubWindowHandleAttribute : Attribute
+namespace MDI.Editor
 {
-	public EWSubWindowHandleAttribute( Type containerType, SubWindowStyle windowStyle = SubWindowStyle.Default, bool active = true)
+	[AttributeUsage( AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
+	public class EWSubWindowHandleAttribute : Attribute
 	{
-		this.containerType = containerType;
-		this.windowStyle = windowStyle;
-		this.active = active;
+		public EWSubWindowHandleAttribute( Type containerType, SubWindowStyle windowStyle = SubWindowStyle.Default, bool active = true)
+		{
+			this.containerType = containerType;
+			this.windowStyle = windowStyle;
+			this.active = active;
+		}
+		public Type containerType;
+		public SubWindowStyle windowStyle;
+		public bool active;
 	}
-	public Type containerType;
-	public SubWindowStyle windowStyle;
-	public bool active;
 }

@@ -1,100 +1,102 @@
 ﻿
 using UnityEngine;
 using System.Reflection;
-using EditorWinEx;
-using EditorWinEx.Internal;
+using MDI.Editor.Internal;
 
-[SubWindowStyle( SubWindowStyle.Default)]
-public class SubWindow
+namespace MDI.Editor
 {
-	public GUIContent Title
+	[SubWindowStyle( SubWindowStyle.Default)]
+	public class SubWindow
 	{
-		get{ return m_Drawer.Title; }
-	}
-	public bool DefaultOpen
-	{
-		get; private set;
-	}
-	public bool IsOpen
-	{
-		get; private set;
-	}
-	public bool isDynamic;
-	
-	public SubWindow( string title, string icon, bool defaultOpen, MethodInfo method, 
-		object target, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
-	{
-		DefaultOpen = defaultOpen;
-		m_Drawer = new SubWindowMethodDrawer( title, icon, method, target, toolbar, helpbox);
-		m_Drawer.Init();
-	}
-	public SubWindow(bool defaultOpen, SubWindowCustomDrawer drawer)
-	{
-		DefaultOpen = defaultOpen;
-		m_Drawer = new SubWindowObjectDrawer( drawer);
-		m_Drawer.Init();
-	}
-	public string GetIndentifier()
-	{
-		if (m_Drawer != null)
-			return m_Drawer.GetID(isDynamic);
-		return "Unknown.UnknownId";
-	}
-	public void AddCloseEventListener( System.Action<SubWindow> onClose)
-	{
-		m_OnClose = onClose;
-	}
-	public void DrawSubWindow( Rect rect)
-	{
-		Rect tb = m_Drawer.DrawToolBar( ref rect);
-		Rect hb = m_Drawer.DrawHelpBox( ref rect);
-		Rect mb = DrawMainArea(rect);
-		m_Drawer.DrawWindow( mb, tb, hb);
-	}
-	public void DrawToolBarExt( Rect rect)
-	{
-		if( GUI.Button( new Rect( rect.x + rect.width - 21, rect.y + 2, 13, 13), string.Empty, GUIStyleCache.GetStyle( "ToolbarSearchCancelButton")) != false)
+		public GUIContent Title
 		{
-			Close();
+			get{ return m_Drawer.Title; }
 		}
-		m_Drawer.DrawLeafToolBar( new Rect( rect.x, rect.y, rect.width - 27, rect.height));
-	}
-	public void Close()
-	{
-		if( IsOpen == false)
+		public bool DefaultOpen
 		{
-			return;
+			get; private set;
 		}
-		IsOpen = false;
+		public bool IsOpen
+		{
+			get; private set;
+		}
+		public bool isDynamic;
 		
-		if( m_OnClose != null)
+		public SubWindow( string title, string icon, bool defaultOpen, MethodInfo method, 
+			object target, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
 		{
-			m_OnClose( this);
+			DefaultOpen = defaultOpen;
+			m_Drawer = new SubWindowMethodDrawer( title, icon, method, target, toolbar, helpbox);
+			m_Drawer.Init();
 		}
-		m_Drawer.Disable();
-	}
-	public void Open()
-	{
-		if( IsOpen != false)
+		public SubWindow(bool defaultOpen, SubWindowCustomDrawer drawer)
 		{
-			return;
+			DefaultOpen = defaultOpen;
+			m_Drawer = new SubWindowObjectDrawer( drawer);
+			m_Drawer.Init();
 		}
-		IsOpen = true;
-		m_Drawer.Enable();
+		public string GetIndentifier()
+		{
+			if (m_Drawer != null)
+				return m_Drawer.GetID(isDynamic);
+			return "Unknown.UnknownId";
+		}
+		public void AddCloseEventListener( System.Action<SubWindow> onClose)
+		{
+			m_OnClose = onClose;
+		}
+		public void DrawSubWindow( Rect rect)
+		{
+			Rect tb = m_Drawer.DrawToolBar( ref rect);
+			Rect hb = m_Drawer.DrawHelpBox( ref rect);
+			Rect mb = DrawMainArea(rect);
+			m_Drawer.DrawWindow( mb, tb, hb);
+		}
+		public void DrawToolBarExt( Rect rect)
+		{
+			if( GUI.Button( new Rect( rect.x + rect.width - 21, rect.y + 2, 13, 13), string.Empty, GUIStyleCache.GetStyle( "ToolbarSearchCancelButton")) != false)
+			{
+				Close();
+			}
+			m_Drawer.DrawLeafToolBar( new Rect( rect.x, rect.y, rect.width - 27, rect.height));
+		}
+		public void Close()
+		{
+			if( IsOpen == false)
+			{
+				return;
+			}
+			IsOpen = false;
+			
+			if( m_OnClose != null)
+			{
+				m_OnClose( this);
+			}
+			m_Drawer.Disable();
+		}
+		public void Open()
+		{
+			if( IsOpen != false)
+			{
+				return;
+			}
+			IsOpen = true;
+			m_Drawer.Enable();
+		}
+		public void Destroy()
+		{
+			IsOpen = false;
+			m_Drawer.Destroy();
+		}
+		public void SerializeSubWindow()
+		{
+			m_Drawer.Serialize( isDynamic);
+		}
+		protected virtual Rect DrawMainArea( Rect rect)
+		{
+			return rect;
+		}
+		System.Action<SubWindow> m_OnClose;
+		readonly SubWindowDrawerBase m_Drawer;
 	}
-	public void Destroy()
-	{
-		IsOpen = false;
-		m_Drawer.Destroy();
-	}
-	public void SerializeSubWindow()
-	{
-		m_Drawer.Serialize( isDynamic);
-	}
-	protected virtual Rect DrawMainArea( Rect rect)
-	{
-		return rect;
-	}
-	System.Action<SubWindow> m_OnClose;
-	readonly SubWindowDrawerBase m_Drawer;
 }

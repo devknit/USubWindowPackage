@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEditor;
 
-namespace EditorWinEx.Internal
+namespace MDI.Editor.Internal
 {
 	internal class SubWindowObjectDrawer : SubWindowDrawerBase
 	{

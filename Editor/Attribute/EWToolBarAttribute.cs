@@ -1,13 +1,16 @@
 ﻿using System;
 
-[AttributeUsage( AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-public class EWToolBarAttribute : Attribute
+namespace MDI.Editor
 {
-	public EWToolBarAttribute( string menuItem, int priority = 1000)
+	[AttributeUsage( AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+	public class EWToolBarAttribute : Attribute
 	{
-		this.menuItem = menuItem;
-		this.priority = priority;
+		public EWToolBarAttribute( string menuItem, int priority = 1000)
+		{
+			this.menuItem = menuItem;
+			this.priority = priority;
+		}
+		public string menuItem;
+		public int priority;
 	}
-	public string menuItem;
-	public int priority;
 }

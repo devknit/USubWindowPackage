@@ -1,5 +1,8 @@
 ﻿
-public interface ISubWinLock
+namespace MDI.Editor
 {
-	void SetLockActive( bool isLockActive);
+	public interface ISubWinLock
+	{
+		void SetLockActive( bool isLockActive);
+	}
 }

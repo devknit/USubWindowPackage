@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace EditorWinEx
+namespace MDI.Editor
 {
 	public class SubWindowLockerHelpBox : SubWindowDockHelpBox
 	{

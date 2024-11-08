@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 using System.Reflection;
 
-namespace EditorWinEx.Internal.Serialization
+namespace MDI.Editor.Internal
 {
 	[Serializable]
 	internal class EWSerializationObject

@@ -5,11 +5,11 @@ using System;
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace EditorWinEx
+namespace MDI.Editor
 {
 	public delegate bool ConditionDelegate( object arg);
 }
-namespace EditorWinEx.Internal
+namespace MDI.Editor.Internal
 {
 	internal class ToolBarTreeNode
 	{

@@ -5,7 +5,7 @@ using System;
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace EditorWinEx.Internal
+namespace MDI.Editor.Internal
 {
 	internal class SubWindowTree : EditorWindowComponentBase
 	{

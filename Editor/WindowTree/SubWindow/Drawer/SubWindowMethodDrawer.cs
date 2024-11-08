@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Reflection;
 
-namespace EditorWinEx.Internal
+namespace MDI.Editor.Internal
 {
 	internal class SubWindowMethodDrawer : SubWindowDrawerBase
 	{

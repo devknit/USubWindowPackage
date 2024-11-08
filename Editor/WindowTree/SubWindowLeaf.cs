@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Xml;
 using System.Collections.Generic;
 
-namespace EditorWinEx.Internal
+namespace MDI.Editor.Internal
 {
 	internal class SubWindowLeaf : SubWindowNode
 	{

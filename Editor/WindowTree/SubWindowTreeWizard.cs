@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace EditorWinEx.Internal
+namespace MDI.Editor.Internal
 {
 	internal class SubWindowTreeLayoutWizard : ScriptableWizard
 	{

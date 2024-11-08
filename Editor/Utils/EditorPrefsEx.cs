@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-namespace EditorWinEx.Internal
+namespace MDI.Editor.Internal
 {
 	internal static class EditorPrefsEx
 	{

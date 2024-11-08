@@ -1,13 +1,16 @@
 ﻿
 using System;
 
-public enum SubWindowStyle
+namespace MDI.Editor
 {
-	Default,
-	Preview,
-	Grid,
+	public enum SubWindowStyle
+	{
+		Default,
+		Preview,
+		Grid,
+	}
 }
-namespace EditorWinEx
+namespace MDI.Editor
 {
 	[AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 	public class SubWindowStyleAttribute : Attribute

@@ -1,5 +1,5 @@
 ﻿
-namespace EditorWinEx.Internal
+namespace MDI.Editor.Internal
 {
 	internal abstract class EWComponentDrawerBase
 	{

@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace EditorWinEx.Internal
+namespace MDI.Editor.Internal
 {
 	internal class SubWindowFactory
 	{

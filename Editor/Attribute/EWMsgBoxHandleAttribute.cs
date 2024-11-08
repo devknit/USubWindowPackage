@@ -1,14 +1,17 @@
 ﻿
 using System;
 
-[AttributeUsage( AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
-public class EWMsgBoxHandleAttribute : Attribute
+namespace MDI.Editor
 {
-	public EWMsgBoxHandleAttribute( Type targetType, int id)
+	[AttributeUsage( AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
+	public class EWMsgBoxHandleAttribute : Attribute
 	{
-		this.id = id;
-		this.targetType = targetType;
+		public EWMsgBoxHandleAttribute( Type targetType, int id)
+		{
+			this.id = id;
+			this.targetType = targetType;
+		}
+		public int id;
+		public Type targetType;
 	}
-	public int id;
-	public Type targetType;
 }

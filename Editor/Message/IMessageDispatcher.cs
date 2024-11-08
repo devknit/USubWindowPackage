@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace EditorWinEx
+namespace MDI.Editor
 {
 	public interface IMessageDispatcher
 	{
