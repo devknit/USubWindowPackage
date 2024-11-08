@@ -1,113 +1,130 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using EditorWinEx;
 
 namespace EditorWinEx.Internal
 {
-    /// <summary>
-    /// SubWindow工厂类
-    /// </summary>
-    internal class SubWindowFactory
-    {
-        private static Dictionary<SubWindowStyle, System.Type> subWindowClass;
-
-        public static SubWindow CreateSubWindow(SubWindowStyle style, string title, string iconPath, bool defaultOpen,
-            MethodInfo method, System.Object target, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
-        {
-            if (!CheckSubWindowParameters(method, toolbar, helpbox))
-                return null;
-            if (subWindowClass == null)
-                GetSubWinodwStyleClasses();
-            else if (!subWindowClass.ContainsKey(style))
-                GetSubWinodwStyleClasses();
-            if (subWindowClass == null || !subWindowClass.ContainsKey(style))
-                return null;
-            System.Type type = subWindowClass[style];
-            return
-                (SubWindow) System.Activator.CreateInstance(type, title, iconPath, defaultOpen, method, target, toolbar,
-                    helpbox);
-        }
-
-        public static SubWindow CreateSubWindow(System.Object container, bool defaultOpen, SubWindowStyle style,
-            System.Type customDrawerType)
-        {
-            if (customDrawerType == null)
-                return null;
-            if (subWindowClass == null)
-                GetSubWinodwStyleClasses();
-            else if (!subWindowClass.ContainsKey(style))
-                GetSubWinodwStyleClasses();
-            if (subWindowClass == null || !subWindowClass.ContainsKey(style))
-                return null;
-            System.Type type = subWindowClass[style];
-            SubWindowCustomDrawer drawer =
-                (SubWindowCustomDrawer) System.Activator.CreateInstance(customDrawerType);
-            if (drawer == null)
-                return null;
-            drawer.SetContainer(container);
-            return (SubWindow) System.Activator.CreateInstance(type, defaultOpen, drawer);
-        }
-
-        /// <summary>
-        /// 检查子窗口绘制函数的参数是否合法
-        /// </summary>
-        /// <param name="infos">绘制方法的参数数组</param>
-        /// <returns></returns>
-        private static bool CheckSubWindowParameters(MethodInfo method, EWSubWindowToolbarType toolbar,
-            SubWindowHelpBoxType helpbox)
-        {
-            ParameterInfo[] infos = method.GetParameters();
-            if (toolbar != EWSubWindowToolbarType.None && helpbox != SubWindowHelpBoxType.None)
+	internal class SubWindowFactory
+	{
+		public static SubWindow CreateSubWindow( 
+			SubWindowStyle style, string title, string iconPath, bool defaultOpen,
+			MethodInfo method, object target, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
+		{
+			if( CheckSubWindowParameters(method, toolbar, helpbox) == false)
+			{
+				return null;
+			}
+			if( subWindowClass == null)
+			{
+				GetSubWinodwStyleClasses();
+			}
+			else if( subWindowClass.ContainsKey( style) == false)
+			{
+				GetSubWinodwStyleClasses();
+			}
+			if( subWindowClass == null || subWindowClass.ContainsKey( style) == false)
+			{
+				return null;
+			}
+			return Activator.CreateInstance( subWindowClass[ style], title, iconPath, defaultOpen, method, target, toolbar, helpbox) as SubWindow;
+		}
+		public static SubWindow CreateSubWindow( object container, bool defaultOpen, SubWindowStyle style, Type customDrawerType)
+		{
+			if( customDrawerType == null)
+			{
+				return null;
+			}
+			if( subWindowClass == null)
+			{
+				GetSubWinodwStyleClasses();
+			}
+			else if( subWindowClass.ContainsKey( style) == false)
+			{
+				GetSubWinodwStyleClasses();
+			}
+			if( subWindowClass == null || subWindowClass.ContainsKey( style) == false)
+			{
+				return null;
+			}
+			Type type = subWindowClass[ style];
+			
+            if( Activator.CreateInstance( customDrawerType) is not SubWindowCustomDrawer drawer)
             {
-                if (infos.Length != 3)
-                    return false;
+                return null;
             }
-            else if ((toolbar != EWSubWindowToolbarType.None && helpbox == SubWindowHelpBoxType.None) ||
-                     (toolbar == EWSubWindowToolbarType.None && helpbox != SubWindowHelpBoxType.None))
-            {
-                if (infos.Length != 2)
-                    return false;
-            }
-            else if (toolbar == EWSubWindowToolbarType.None && helpbox == SubWindowHelpBoxType.None)
-            {
-                if (infos.Length != 1)
-                    return false;
-            }
-            for (int i = 0; i < infos.Length; i++)
-            {
-                if (infos[i].ParameterType != typeof (Rect))
-                    return false;
-            }
-            return true;
-        }
-
-        private static void GetSubWinodwStyleClasses()
-        {
-            if (subWindowClass == null)
-                subWindowClass = new Dictionary<SubWindowStyle, Type>();
-            subWindowClass.Clear();
-            System.Type sbwindow = typeof (SubWindow);
-            Assembly assembly = sbwindow.Assembly;
-            System.Type[] tp = assembly.GetTypes();
-            for (int i = 0; i < tp.Length; i++)
-            {
-                if (!tp[i].IsClass)
-                    continue;
-                if (tp[i].IsAbstract)
-                    continue;
-                if (tp[i].IsSubclassOf(sbwindow) || tp[i] == sbwindow)
-                {
-                    System.Object[] atts = tp[i].GetCustomAttributes(typeof (SubWindowStyleAttribute), false);
-                    for (int j = 0; j < atts.Length; j++)
-                    {
-                        SubWindowStyleAttribute att = (SubWindowStyleAttribute) atts[j];
-                        subWindowClass[att.subWindowStyle] = tp[i];
-                    }
-                }
-            }
-        }
-    }
+            drawer.SetContainer( container);
+			
+			return Activator.CreateInstance( type, defaultOpen, drawer) as SubWindow;
+		}
+		static bool CheckSubWindowParameters( MethodInfo method, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
+		{
+			ParameterInfo[] infos = method.GetParameters();
+			
+			if( toolbar != EWSubWindowToolbarType.None && helpbox != SubWindowHelpBoxType.None)
+			{
+				if( infos.Length != 3)
+				{
+					return false;
+				}
+			}
+			else if( (toolbar != EWSubWindowToolbarType.None && helpbox == SubWindowHelpBoxType.None)
+			||		(toolbar == EWSubWindowToolbarType.None && helpbox != SubWindowHelpBoxType.None))
+			{
+				if( infos.Length != 2)
+				{
+					return false;
+				}
+			}
+			else if( toolbar == EWSubWindowToolbarType.None && helpbox == SubWindowHelpBoxType.None)
+			{
+				if (infos.Length != 1)
+				{
+					return false;
+				}
+			}
+			for( int i0 = 0; i0 < infos.Length; ++i0)
+			{
+				if( infos[ i0].ParameterType != typeof( Rect))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		static void GetSubWinodwStyleClasses()
+		{
+			if( subWindowClass == null)
+			{
+				subWindowClass = new Dictionary<SubWindowStyle, Type>();
+			}
+			subWindowClass.Clear();
+			Type sbwindow = typeof( SubWindow);
+			Assembly assembly = sbwindow.Assembly;
+			Type[] tp = assembly.GetTypes();
+			
+			for( int i0 = 0; i0 < tp.Length; ++i0)
+			{
+				if( tp[ i0].IsClass == false)
+				{
+					continue;
+				}
+				if( tp[ i0].IsAbstract != false)
+				{
+					continue;
+				}
+				if( tp[ i0].IsSubclassOf( sbwindow) || tp[ i0] == sbwindow)
+				{
+					object[] atts = tp[ i0].GetCustomAttributes( typeof( SubWindowStyleAttribute), false);
+					
+					for( int i1 = 0; i1 < atts.Length; ++i1)
+					{
+						var att = atts[ i1] as SubWindowStyleAttribute;
+						subWindowClass[ att.subWindowStyle] = tp[ i0];
+					}
+				}
+			}
+		}
+		static Dictionary<SubWindowStyle, Type> subWindowClass;
+	}
 }

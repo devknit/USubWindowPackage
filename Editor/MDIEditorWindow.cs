@@ -10,6 +10,23 @@ using EditorWinEx.Internal.Serialization;
 
 public class MDIEditorWindow : EditorWindow, IMessageDispatcher
 {
+	public static T CreateWindow<T>( string title, object handle=null) where T : MDIEditorWindow
+    {
+        T window = GetWindow<T>( title);
+		
+        if( handle != null)
+        {
+            window.m_Handle = EWSerializationObject.CreateInstance( handle);
+        }
+        else
+        {
+            window.m_Handle = null;
+        }
+        window.Clear();
+        window.Init();
+        window.m_IsInitialized = true;
+        return window;
+    }
 	public static T CreateWindow<T>( object handle=null) where T : MDIEditorWindow
 	{
 		T window = GetWindow<T>();
