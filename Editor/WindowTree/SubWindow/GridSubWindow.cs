@@ -16,7 +16,7 @@ namespace MDI.Editor
 		
 		public GridSubWindow( 
 			string title, string icon, bool defaultOpen, MethodInfo method, 
-			object target, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox) 
+			object target, SubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox) 
 			: base(title, icon, defaultOpen, method, target, toolbar, helpbox)
 		{
 		}

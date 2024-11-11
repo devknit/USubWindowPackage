@@ -30,7 +30,7 @@ namespace MDI.Editor.Internal
 			return result;
 		}
 		public SubWindowMethodDrawer( string title, string icon, MethodInfo method, 
-			object target, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
+			object target, SubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
 		{
 			m_Title = CreateTitle( title, icon);
 			m_Method = method;
@@ -63,7 +63,7 @@ namespace MDI.Editor.Internal
 				}
 				if( m_Params.Length > 1)
 				{
-					if( m_ToolBar == EWSubWindowToolbarType.None)
+					if( m_ToolBar == SubWindowToolbarType.None)
 					{
 						m_Params[ 1] = helpboxRect;
 					}
@@ -101,7 +101,7 @@ namespace MDI.Editor.Internal
 		{
 			get{ return m_HelpBox; }
 		}
-		protected override EWSubWindowToolbarType toolBar
+		protected override SubWindowToolbarType toolBar
 		{
 			get{ return m_ToolBar; }
 		}
@@ -109,7 +109,7 @@ namespace MDI.Editor.Internal
         readonly object[] m_Params;
         readonly MethodInfo m_Method;
         readonly object m_Target;
-        readonly EWSubWindowToolbarType m_ToolBar;
+        readonly SubWindowToolbarType m_ToolBar;
         readonly SubWindowHelpBox m_HelpBox = null;
         readonly string m_Id;
 	}

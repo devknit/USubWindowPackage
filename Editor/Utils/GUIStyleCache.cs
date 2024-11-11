@@ -1,34 +1,35 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace MDI.Editor
 {
 	public class GUIStyleCache
 	{
-		public static GUIStyle GetStyle(string style)
+		public static GUIStyle GetStyle( string style)
 		{
-			if( instance == null)
+			if( s_Instance == null)
 			{
-				instance = new GUIStyleCache();
+				s_Instance = new GUIStyleCache();
 			}
-			if( instance.m_StyleCache == null)
+			if( s_Instance.m_StyleCache == null)
 			{
-				instance.m_StyleCache = new Dictionary<string, GUIStyle>();
+				s_Instance.m_StyleCache = new Dictionary<string, GUIStyle>();
 			}
 			GUIStyle st = null;
 			
-			if( instance.m_StyleCache.ContainsKey( style) != false)
+			if( s_Instance.m_StyleCache.ContainsKey( style) != false)
 			{
-				st = instance.m_StyleCache[ style];
+				st = s_Instance.m_StyleCache[ style];
 			}
 			if( st == null)
 			{
 				st = style;
-				instance.m_StyleCache[ style] = st;
+				s_Instance.m_StyleCache[ style] = st;
 			}
 			return st;
 		}
-		static GUIStyleCache instance;
+		static GUIStyleCache s_Instance;
 		Dictionary<string, GUIStyle> m_StyleCache;
 	}
 }

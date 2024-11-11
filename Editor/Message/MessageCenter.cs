@@ -5,321 +5,354 @@ using System.Collections.Generic;
 namespace MDI.Editor.Internal
 {
 	public delegate void MessageHandle();
-	public delegate void MessageHandle<T>(T arg);
-	public delegate void MessageHandle<T0, T1>(T0 arg0, T1 arg1);
-	public delegate void MessageHandle<T0, T1, T2>(T0 arg0, T1 arg1, T2 arg2);
-	public delegate void MessageHandle<T0, T1, T2, T3>(T0 arg0, T1 arg1, T2 arg2, T3 arg3);
+	public delegate void MessageHandle<T>( T arg);
+	public delegate void MessageHandle<T0, T1>( T0 arg0, T1 arg1);
+	public delegate void MessageHandle<T0, T1, T2>( T0 arg0, T1 arg1, T2 arg2);
+	public delegate void MessageHandle<T0, T1, T2, T3>( T0 arg0, T1 arg1, T2 arg2, T3 arg3);
 	
 	internal static class MessageCenter
 	{
-		static Dictionary<string, Dictionary<int, Delegate>> m_Messages;
-
-		public static void AddListener(this IMessageDispatcher dispatcher, int messageId, MessageHandle handle)
+		public static void AddListener( this IMessageDispatcher dispatcher, int messageId, MessageHandle handle)
 		{
-			Type containterType = dispatcher.GetContainerType();
-			if (handle == null)
-				return;
-			var messages = GetMessagesOfType(containterType);
-			if (messages == null)
-				return;
-			if (CombineMethod(messageId, messages, handle))
+			if( handle == null)
 			{
-				messages[messageId] = (MessageHandle)Delegate.Combine(messages[messageId], handle);
+				return;
+			}
+			Type containterType = dispatcher.GetContainerType();
+			var messages = GetMessagesOfType( containterType);
+			
+			if( messages == null)
+			{
+				return;
+			}
+			if( CombineMethod( messageId, messages, handle) != false)
+			{
+				messages[ messageId] = (MessageHandle)Delegate.Combine( messages[ messageId], handle);
 			}
 		}
-
-		public static void AddListener<T>(this IMessageDispatcher dispatcher, int messageId, MessageHandle<T> handle)
+		public static void AddListener<T>( this IMessageDispatcher dispatcher, int messageId, MessageHandle<T> handle)
 		{
-			Type containterType = dispatcher.GetContainerType();
-			if (handle == null)
-				return;
-			var messages = GetMessagesOfType(containterType);
-			if (messages == null)
-				return;
-			if (CombineMethod(messageId, messages, handle))
+			if( handle == null)
 			{
-				messages[messageId] = (MessageHandle<T>)Delegate.Combine(messages[messageId], handle);
+				return;
+			}
+			Type containterType = dispatcher.GetContainerType();
+			var messages = GetMessagesOfType( containterType);
+			
+			if( messages == null)
+			{
+				return;
+			}
+			if( CombineMethod( messageId, messages, handle) != false)
+			{
+				messages[ messageId] = (MessageHandle<T>)Delegate.Combine( messages[ messageId], handle);
 			}
 		}
-
-		public static void AddListener<T0, T1>(this IMessageDispatcher dispatcher, int messageId, MessageHandle<T0, T1> handle)
+		public static void AddListener<T0, T1>( this IMessageDispatcher dispatcher, int messageId, MessageHandle<T0, T1> handle)
 		{
-			Type containterType = dispatcher.GetContainerType();
-			if (handle == null)
-				return;
-			var messages = GetMessagesOfType(containterType);
-			if (messages == null)
-				return;
-			if (CombineMethod(messageId, messages, handle))
+			if( handle == null)
 			{
-				messages[messageId] = (MessageHandle<T0, T1>)Delegate.Combine(messages[messageId], handle);
+				return;
+			}
+			Type containterType = dispatcher.GetContainerType();
+			var messages = GetMessagesOfType( containterType);
+			
+			if( messages == null)
+			{
+				return;
+			}
+			if( CombineMethod( messageId, messages, handle) != false)
+			{
+				messages[ messageId] = (MessageHandle<T0, T1>)Delegate.Combine( messages[ messageId], handle);
 			}
 		}
-
-		public static void AddListener<T0, T1, T2>(this IMessageDispatcher dispatcher, int messageId, MessageHandle<T0, T1, T2> handle)
+		public static void AddListener<T0, T1, T2>( this IMessageDispatcher dispatcher, int messageId, MessageHandle<T0, T1, T2> handle)
 		{
-			Type containterType = dispatcher.GetContainerType();
-			if (handle == null)
-				return;
-			var messages = GetMessagesOfType(containterType);
-			if (messages == null)
-				return;
-			if (CombineMethod(messageId, messages, handle))
+			if( handle == null)
 			{
-				messages[messageId] = (MessageHandle<T0, T1, T2>)Delegate.Combine(messages[messageId], handle);
+				return;
+			}
+			Type containterType = dispatcher.GetContainerType();
+			var messages = GetMessagesOfType( containterType);
+			
+			if( messages == null)
+			{
+				return;
+			}
+			if( CombineMethod( messageId, messages, handle) != false)
+			{
+				messages[ messageId] = (MessageHandle<T0, T1, T2>)Delegate.Combine( messages[ messageId], handle);
 			}
 		}
-
 		public static void AddListener<T0, T1, T2, T3>(this IMessageDispatcher dispatcher, int messageId, MessageHandle<T0, T1, T2, T3> handle)
 		{
-			Type containterType = dispatcher.GetContainerType();
-			if (handle == null)
-				return;
-			var messages = GetMessagesOfType(containterType);
-			if (messages == null)
-				return;
-			if (CombineMethod(messageId, messages, handle))
+			if( handle == null)
 			{
-				messages[messageId] = (MessageHandle<T0, T1, T2, T3>)Delegate.Combine(messages[messageId], handle);
+				return;
+			}
+			Type containterType = dispatcher.GetContainerType();
+			var messages = GetMessagesOfType( containterType);
+			
+			if( messages == null)
+			{
+				return;
+			}
+			if( CombineMethod( messageId, messages, handle) != false)
+			{
+				messages[ messageId] = (MessageHandle<T0, T1, T2, T3>)Delegate.Combine( messages[ messageId], handle);
 			}
 		}
-
 		public static void RemoveListener(this IMessageDispatcher dispatcher, int messageId, MessageHandle handle)
 		{
-			Type containterType = dispatcher.GetContainerType();
-			if (handle == null)
-				return;
-			var messages = GetMessagesOfType(containterType, false);
-			if (messages != null)
+			if( handle == null)
 			{
-				if(RemoveMethod(messageId, messages, handle))
+				return;
+			}
+			Type containterType = dispatcher.GetContainerType();
+			var messages = GetMessagesOfType( containterType, false);
+			
+			if( messages != null)
+			{
+				if( RemoveMethod( messageId, messages, handle) != false)
 				{
-					messages[messageId] = (MessageHandle) Delegate.Remove(messages[messageId], handle);
-					RemoveEmptyMessage(messageId, containterType);
+					messages[ messageId] = (MessageHandle) Delegate.Remove( messages[ messageId], handle);
+					RemoveEmptyMessage( messageId, containterType);
 				}
 			}
 		}
-
-		public static void RemoveListener<T>(this IMessageDispatcher dispatcher, int messageId, MessageHandle<T> handle)
+		public static void RemoveListener<T>( this IMessageDispatcher dispatcher, int messageId, MessageHandle<T> handle)
 		{
-			Type containterType = dispatcher.GetContainerType();
-			if (handle == null)
-				return;
-			var messages = GetMessagesOfType(containterType, false);
-			if (messages != null)
+			if( handle == null)
 			{
-				if (RemoveMethod(messageId, messages, handle))
+				return;
+			}
+			Type containterType = dispatcher.GetContainerType();
+			var messages = GetMessagesOfType( containterType, false);
+			
+			if( messages != null)
+			{
+				if( RemoveMethod( messageId, messages, handle) != false)
 				{
-					messages[messageId] = (MessageHandle<T>)Delegate.Remove(messages[messageId], handle);
-					RemoveEmptyMessage(messageId, containterType);
+					messages[ messageId] = (MessageHandle<T>)Delegate.Remove( messages[ messageId], handle);
+					RemoveEmptyMessage( messageId, containterType);
 				}
 			}
 		}
-
-		public static void RemoveListener<T0, T1>(this IMessageDispatcher dispatcher, int messageId, MessageHandle<T0, T1> handle)
+		public static void RemoveListener<T0, T1>( this IMessageDispatcher dispatcher, int messageId, MessageHandle<T0, T1> handle)
 		{
-			Type containterType = dispatcher.GetContainerType();
-			if (handle == null)
-				return;
-			var messages = GetMessagesOfType(containterType, false);
-			if (messages != null)
+			if( handle == null)
 			{
-				if (RemoveMethod(messageId, messages, handle))
+				return;
+			}
+			Type containterType = dispatcher.GetContainerType();
+			var messages = GetMessagesOfType( containterType, false);
+			
+			if( messages != null)
+			{
+				if( RemoveMethod( messageId, messages, handle) != false)
 				{
-					messages[messageId] = (MessageHandle<T0, T1>)Delegate.Remove(messages[messageId], handle);
-					RemoveEmptyMessage(messageId, containterType);
+					messages[ messageId] = (MessageHandle<T0, T1>)Delegate.Remove( messages[ messageId], handle);
+					RemoveEmptyMessage( messageId, containterType);
 				}
 			}
 		}
-
 		public static void RemoveListener<T0, T1, T2>(this IMessageDispatcher dispatcher, int messageId, MessageHandle<T0, T1, T2> handle)
 		{
-			Type containterType = dispatcher.GetContainerType();
-			if (handle == null)
-				return;
-			var messages = GetMessagesOfType(containterType, false);
-			if (messages != null)
+			if( handle == null)
 			{
-				if (RemoveMethod(messageId, messages, handle))
+				return;
+			}
+			Type containterType = dispatcher.GetContainerType();
+			var messages = GetMessagesOfType( containterType, false);
+			
+			if( messages != null)
+			{
+				if( RemoveMethod( messageId, messages, handle) != false)
 				{
-					messages[messageId] = (MessageHandle<T0, T1, T2>)Delegate.Remove(messages[messageId], handle);
-					RemoveEmptyMessage(messageId, containterType);
+					messages[ messageId] = (MessageHandle<T0, T1, T2>)Delegate.Remove( messages[ messageId], handle);
+					RemoveEmptyMessage( messageId, containterType);
 				}
 			}
 		}
-
 		public static void RemoveListener<T0, T1, T2, T3>(this IMessageDispatcher dispatcher, int messageId, MessageHandle<T0, T1, T2, T3> handle)
 		{
-			Type containterType = dispatcher.GetContainerType();
-			if (handle == null)
-				return;
-			var messages = GetMessagesOfType(containterType, false);
-			if (messages != null)
+			if( handle == null)
 			{
-				if (RemoveMethod(messageId, messages, handle))
+				return;
+			}
+			Type containterType = dispatcher.GetContainerType();
+			var messages = GetMessagesOfType( containterType, false);
+			
+			if( messages != null)
+			{
+				if( RemoveMethod( messageId, messages, handle) != false)
 				{
-					messages[messageId] = (MessageHandle<T0, T1, T2, T3>)Delegate.Remove(messages[messageId], handle);
-					RemoveEmptyMessage(messageId, containterType);
+					messages[ messageId] = (MessageHandle<T0, T1, T2, T3>)Delegate.Remove( messages[ messageId], handle);
+					RemoveEmptyMessage( messageId, containterType);
 				}
 			}
 		}
-
 		public static void Broadcast(this IMessageDispatcher dispatcher, int messageId)
 		{
 			Type containterType = dispatcher.GetContainerType();
-			var method = GetMethod(containterType, messageId);
-			if (method != null)
+			
+			if( GetMethod( containterType, messageId) is MessageHandle handle)
 			{
-				MessageHandle handle = (MessageHandle) method;
-				if (handle != null)
-					handle.Invoke();
+				handle.Invoke();
 			}
 		}
-
-		public static void Broadcast<T>(this IMessageDispatcher dispatcher, int messageId, T arg)
+		public static void Broadcast<T>( this IMessageDispatcher dispatcher, int messageId, T arg)
 		{
 			Type containterType = dispatcher.GetContainerType();
-			var method = GetMethod(containterType, messageId);
-			if (method != null)
+			
+			if( GetMethod( containterType, messageId) is MessageHandle<T> handle)
 			{
-				MessageHandle<T> handle = (MessageHandle<T>)method;
-				if (handle != null)
-					handle.Invoke(arg);
+				handle.Invoke( arg);
 			}
 		}
-
-		public static void Broadcast<T0, T1>(this IMessageDispatcher dispatcher, int messageId, T0 arg0, T1 arg1)
+		public static void Broadcast<T0, T1>( this IMessageDispatcher dispatcher, int messageId, T0 arg0, T1 arg1)
 		{
 			Type containterType = dispatcher.GetContainerType();
-			var method = GetMethod(containterType, messageId);
-			if (method != null)
+			
+			if( GetMethod( containterType, messageId) is MessageHandle<T0, T1> handle)
 			{
-				MessageHandle<T0, T1> handle = (MessageHandle<T0, T1>)method;
-				if (handle != null)
-					handle.Invoke(arg0, arg1);
+				handle.Invoke( arg0, arg1);
 			}
 		}
-
-		public static void Broadcast<T0, T1, T2>(this IMessageDispatcher dispatcher, int messageId, T0 arg0, T1 arg1, T2 arg2)
+		public static void Broadcast<T0, T1, T2>( this IMessageDispatcher dispatcher, int messageId, T0 arg0, T1 arg1, T2 arg2)
 		{
 			Type containterType = dispatcher.GetContainerType();
-			var method = GetMethod(containterType, messageId);
-			if (method != null)
+			
+			if( GetMethod( containterType, messageId) is MessageHandle<T0, T1, T2> handle)
 			{
-				MessageHandle<T0, T1, T2> handle = (MessageHandle<T0, T1, T2>)method;
-				if (handle != null)
-					handle.Invoke(arg0, arg1, arg2);
+				handle.Invoke(arg0, arg1, arg2);
 			}
 		}
-
-		public static void Broadcast<T0, T1, T2, T3>(this IMessageDispatcher dispatcher, int messageId, T0 arg0, T1 arg1, T2 arg2, T3 arg3)
+		public static void Broadcast<T0, T1, T2, T3>( this IMessageDispatcher dispatcher, int messageId, T0 arg0, T1 arg1, T2 arg2, T3 arg3)
 		{
 			Type containterType = dispatcher.GetContainerType();
-			var method = GetMethod(containterType, messageId);
-			if (method != null)
+			
+			if( GetMethod( containterType, messageId) is MessageHandle<T0, T1, T2, T3> handle)
 			{
-				MessageHandle<T0, T1, T2, T3> handle = (MessageHandle<T0, T1, T2, T3>)method;
-				if (handle != null)
-					handle.Invoke(arg0, arg1, arg2, arg3);
+				handle.Invoke( arg0, arg1, arg2, arg3);
 			}
 		}
-
-		static Dictionary<int, Delegate> GetMessagesOfType(Type containterType, bool createIfNotExists = true)
+		static Dictionary<int, Delegate> GetMessagesOfType( Type containterType, bool createIfNotExists = true)
 		{
-			if (containterType == null)
+			if( containterType == null)
+			{
 				return null;
+			}
 			string typeName = containterType.FullName;
-			if (string.IsNullOrEmpty(typeName))
-				return null;
-			if (m_Messages == null)
+			
+			if( string.IsNullOrEmpty( typeName) != false)
 			{
-				if (createIfNotExists)
+				return null;
+			}
+			if( m_Messages == null)
+			{
+				if( createIfNotExists != false)
+				{
 					m_Messages = new Dictionary<string, Dictionary<int, Delegate>>();
+				}
 				else
+				{
 					return null;
+				}
 			}
 			Dictionary<int, Delegate> messages = null;
-			if (m_Messages.ContainsKey(typeName))
-				messages = m_Messages[typeName];
-			else if(createIfNotExists)
+			
+			if( m_Messages.ContainsKey( typeName) != false)
+			{
+				messages = m_Messages[ typeName];
+			}
+			else if( createIfNotExists != false)
 			{
 				messages = new Dictionary<int, Delegate>();
-				m_Messages.Add(typeName, messages);
+				m_Messages.Add( typeName, messages);
 			}
 			return messages;
 		}
-
-		static bool CombineMethod(int messageId, Dictionary<int, Delegate> messages, Delegate handle)
+		static bool CombineMethod( int messageId, Dictionary<int, Delegate> messages, Delegate handle)
 		{
-			Delegate del = null;
-			if (messages.ContainsKey(messageId))
+			if( messages.TryGetValue( messageId, out Delegate message) != false)
 			{
-				del = messages[messageId];
-				if (del.GetType() == handle.GetType())
+				if( message.GetType() == handle.GetType())
 				{
 					return true;
 				}
 			}
 			else
 			{
-				messages.Add(messageId, handle);
+				messages.Add( messageId, handle);
 			}
 			return false;
 		}
-
-		static bool RemoveMethod(int messageId, Dictionary<int, Delegate> messages, Delegate handle)
+		static bool RemoveMethod( int messageId, Dictionary<int, Delegate> messages, Delegate handle)
 		{
-			if (messages == null)
+			if( messages == null)
+			{
 				return false;
-			Delegate message = null;
-			if (messages.ContainsKey(messageId))
-				message = messages[messageId];
-			else
+			}
+			if( messages.TryGetValue( messageId, out Delegate message) == false)
+			{
 				return false;
-			if (message.GetType() == handle.GetType())
+			}
+			if( message.GetType() == handle.GetType())
 			{
 				return true;
 			}
 			return false;
 		}
-
 		static Delegate GetMethod(Type containterType, int messageId)
 		{
-			if (containterType == null)
-				return null;
-			string typeName = containterType.FullName;
-			if (string.IsNullOrEmpty(typeName))
-				return null;
-			if (m_Messages.ContainsKey(typeName))
+			if( containterType == null)
 			{
-				var messages = m_Messages[typeName];
-				if (messages != null && messages.ContainsKey(messageId))
+				return null;
+			}
+			string typeName = containterType.FullName;
+			
+			if( string.IsNullOrEmpty( typeName) != false)
+			{
+				return null;
+			}
+			if( m_Messages.ContainsKey( typeName) != false)
+			{
+				var messages = m_Messages[ typeName];
+				
+				if( messages != null && messages.ContainsKey( messageId) != false)
 				{
-					return messages[messageId];
+					return messages[ messageId];
 				}
 			}
 			return null;
 		}
-
 		static void RemoveEmptyMessage(int messageId, Type containterType)
 		{
-			if (containterType == null)
+			if( containterType == null)
+			{
 				return;
+			}
 			string typeName = containterType.FullName;
-			if (string.IsNullOrEmpty(typeName))
-				return;
 			
-			if (m_Messages.ContainsKey(typeName))
+			if( string.IsNullOrEmpty( typeName) != false)
+			{
+				return;
+			}
+			if( m_Messages.ContainsKey( typeName) != false)
 			{
 				Dictionary<int, Delegate> messages = m_Messages[typeName];
-				if (messages.ContainsKey(messageId) && messages[messageId] == null)
+				
+				if( messages.ContainsKey( messageId) && messages[ messageId] == null)
 				{
-					messages.Remove(messageId);
+					messages.Remove( messageId);
 				}
-				if (messages.Count == 0)
-					m_Messages.Remove(typeName);
+				if( messages.Count == 0)
+				{
+					m_Messages.Remove( typeName);
+				}
 			}
-
 		}
+		static Dictionary<string, Dictionary<int, Delegate>> m_Messages;
 	}
 }

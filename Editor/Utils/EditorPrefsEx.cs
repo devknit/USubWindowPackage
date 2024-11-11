@@ -72,7 +72,7 @@ namespace MDI.Editor.Internal
 		}
 		private static string KeyWarpper( string key)
 		{
-			if( string.IsNullOrEmpty(key))
+			if( string.IsNullOrEmpty( key) != false)
 			{
 				key = "Default";
 			}

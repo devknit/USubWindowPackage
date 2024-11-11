@@ -6,21 +6,21 @@ using System.Reflection;
 namespace MDI.Editor.Internal
 {
 	[Serializable]
-	internal class EWSerializationObject
+	internal class SerializationObject
 	{
-		EWSerializationObject( object obj)
+		SerializationObject( object obj)
 		{
 			m_Obj = obj;
 			m_ObjectAssemblyName = obj.GetType().Assembly.FullName;
 			m_ObjectClassName = obj.GetType().FullName;
 		}
-		public static EWSerializationObject CreateInstance( object handle)
+		public static SerializationObject CreateInstance( object handle)
 		{
-			if (handle == null)
+			if( handle == null)
 			{
 				return null;
 			}
-			return new EWSerializationObject(handle);
+			return new SerializationObject( handle);
 		}
 		public void SaveObject(string windowID)
 		{
@@ -29,7 +29,7 @@ namespace MDI.Editor.Internal
 				return;
 			}
 			string id = windowID + "." + m_ObjectAssemblyName + "." + m_ObjectClassName;
-			EditorPrefsEx.SetObject(id, this.m_Obj);
+			EditorPrefsEx.SetObject( id, this.m_Obj);
 		}
 		public void LoadObject( string windowID)
 		{
@@ -57,8 +57,7 @@ namespace MDI.Editor.Internal
 		}
 		public void ClearObject( string windowID)
 		{
-			string id = windowID + "." + m_ObjectAssemblyName + "." + m_ObjectClassName;
-			EditorPrefsEx.DeleteKey(id);
+			EditorPrefsEx.DeleteKey( windowID + "." + m_ObjectAssemblyName + "." + m_ObjectClassName);
 		}
 		public object Obj
 		{

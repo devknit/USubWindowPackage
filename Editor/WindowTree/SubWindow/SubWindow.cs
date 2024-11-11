@@ -23,7 +23,7 @@ namespace MDI.Editor
 		public bool isDynamic;
 		
 		public SubWindow( string title, string icon, bool defaultOpen, MethodInfo method, 
-			object target, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
+			object target, SubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
 		{
 			DefaultOpen = defaultOpen;
 			m_Drawer = new SubWindowMethodDrawer( title, icon, method, target, toolbar, helpbox);

@@ -7,21 +7,14 @@ namespace MDI.Editor
 	[Serializable]
 	public abstract class CustomEWComponentDrawerBase : IMessageDispatcher
 	{
-		public object Container
-		{
-			get { return container; }
-		}
-		[NonSerialized]
-		protected object container;
-		
 		public void SetContainer( object container)
 		{
-			if( this.container != null)
+			if( m_Container != null)
 			{
 				Debug.LogError( "Error，Containers are only allowed to be set during initialization!");
 				return;
 			}
-			this.container = container;
+			m_Container = container;
 		}
 		public abstract void Init();
 		public abstract void OnEnable();
@@ -30,11 +23,16 @@ namespace MDI.Editor
 		
 		public Type GetContainerType()
 		{
-			if( container == null)
+			if( m_Container == null)
 			{
 				return null;
 			}
-			return container.GetType();
+			return m_Container.GetType();
 		}
+		public object Container
+		{
+			get { return m_Container; }
+		}
+		object m_Container;
 	}
 }

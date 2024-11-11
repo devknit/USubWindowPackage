@@ -64,16 +64,16 @@ namespace MDI.Editor.Internal
 		}
 		public XmlElement UseLayout( string layoutName, string treeId)
 		{
-			if( string.IsNullOrEmpty(layoutName) != false)
+			if( string.IsNullOrEmpty( layoutName) != false)
 			{
 				return null;
 			}
-			if( string.IsNullOrEmpty(treeId) != false)
+			if( string.IsNullOrEmpty( treeId) != false)
 			{
 				return null;
 			}
 			bool isCurrent = layoutName == "Current";
-			string path = Path.Combine(GetLayoutCfgsPath(isCurrent), layoutName + ".xml");
+			string path = Path.Combine( GetLayoutCfgsPath( isCurrent), layoutName + ".xml");
 			
 			if( File.Exists( path) != false)
 			{

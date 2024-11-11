@@ -9,7 +9,7 @@ namespace MDI.Editor.Internal
 	{
 		public static SubWindow CreateSubWindow( 
 			SubWindowStyle style, string title, string iconPath, bool defaultOpen,
-			MethodInfo method, object target, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
+			MethodInfo method, object target, SubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
 		{
 			if( CheckSubWindowParameters(method, toolbar, helpbox) == false)
 			{
@@ -57,26 +57,26 @@ namespace MDI.Editor.Internal
 			
 			return Activator.CreateInstance( type, defaultOpen, drawer) as SubWindow;
 		}
-		static bool CheckSubWindowParameters( MethodInfo method, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
+		static bool CheckSubWindowParameters( MethodInfo method, SubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
 		{
 			ParameterInfo[] infos = method.GetParameters();
 			
-			if( toolbar != EWSubWindowToolbarType.None && helpbox != SubWindowHelpBoxType.None)
+			if( toolbar != SubWindowToolbarType.None && helpbox != SubWindowHelpBoxType.None)
 			{
 				if( infos.Length != 3)
 				{
 					return false;
 				}
 			}
-			else if( (toolbar != EWSubWindowToolbarType.None && helpbox == SubWindowHelpBoxType.None)
-			||		(toolbar == EWSubWindowToolbarType.None && helpbox != SubWindowHelpBoxType.None))
+			else if( (toolbar != SubWindowToolbarType.None && helpbox == SubWindowHelpBoxType.None)
+			||		(toolbar == SubWindowToolbarType.None && helpbox != SubWindowHelpBoxType.None))
 			{
 				if( infos.Length != 2)
 				{
 					return false;
 				}
 			}
-			else if( toolbar == EWSubWindowToolbarType.None && helpbox == SubWindowHelpBoxType.None)
+			else if( toolbar == SubWindowToolbarType.None && helpbox == SubWindowHelpBoxType.None)
 			{
 				if (infos.Length != 1)
 				{

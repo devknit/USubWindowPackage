@@ -11,29 +11,25 @@ namespace MDI.Editor
 	
 	public class EditorWindowMsgBox : EditorWindowComponentBase
 	{
-		public bool IsShowing
-		{
-			get { return m_IsShowing; }
-		}
-		public void AddMsgBox( int id, MethodInfo method, object target, EWRectangle rectangle)
+		public void AddMsgBox( int id, MethodInfo method, object target, Rectangle rectangle)
 		{
 			if( m_MsgBoxs.ContainsKey( id) != false)
 			{
-				Debug.LogError("Error, MsgBox method that already contains the ID:" + id);
+				Debug.LogError( "Error, MsgBox method that already contains the ID:" + id);
 				return;
 			}
-			var msgbox = new EWMsgBoxMethodDrawer( method, target, rectangle);
+			var msgbox = new MsgBoxMethodDrawer( method, target, rectangle);
 			msgbox.Init();
 			m_MsgBoxs.Add( id, msgbox);
 		}
-		public void AddMsgBox( int id, EWMsgBoxCustomDrawer drawer)
+		public void AddMsgBox( int id, MsgBoxCustomDrawer drawer)
 		{
 			if( m_MsgBoxs.ContainsKey( id) != false)
 			{
-				Debug.LogError("Error, MsgBox method that already contains the ID:" + id);
+				Debug.LogError( "Error, MsgBox method that already contains the ID:" + id);
 				return;
 			}
-			var msgbox = new EWMsgBoxObjectDrawer( drawer);
+			var msgbox = new MsgBoxObjectDrawer( drawer);
 			msgbox.Init();
 			m_MsgBoxs.Add( id, msgbox);
 		}
@@ -72,15 +68,15 @@ namespace MDI.Editor
 		}
 		protected override void OnRegisterMethod( object container, MethodInfo method, object target)
 		{
-			object[] atts = method.GetCustomAttributes( typeof( EWMsgBoxAttribute), false);
+			object[] atts = method.GetCustomAttributes( typeof( MsgBoxAttribute), false);
 			ParameterInfo[] parameters = method.GetParameters();
 			
 			if( atts != null && parameters.Length == 2 && parameters[ 0].ParameterType == typeof( Rect) && parameters[ 1].ParameterType == typeof( object))
 			{
 				for( int i1 = 0; i1 < atts.Length; ++i1)
 				{
-					EWMsgBoxAttribute att = atts[ i1] as EWMsgBoxAttribute;
-					AddMsgBox( att.id, method, target, att.Rectangle);
+					MsgBoxAttribute att = atts[ i1] as MsgBoxAttribute;
+					AddMsgBox( att.Id, method, target, att.Rectangle);
 				}
 			}
 		}
@@ -90,29 +86,29 @@ namespace MDI.Editor
 			{
 				return;
 			}
-			if( type.IsSubclassOf( typeof( EWMsgBoxCustomDrawer)) == false)
+			if( type.IsSubclassOf( typeof( MsgBoxCustomDrawer)) == false)
 			{
 				return;
 			}
-			object[] atts = type.GetCustomAttributes( typeof( EWMsgBoxHandleAttribute), false);
+			object[] atts = type.GetCustomAttributes( typeof( MsgBoxHandleAttribute), false);
 			
 			for( int i0 = 0; i0 < atts.Length; ++i0)
 			{
-				if( atts[ i0] is not EWMsgBoxHandleAttribute att)
+				if( atts[ i0] is not MsgBoxHandleAttribute att)
 				{
 					continue;
 				}
-				if( att.targetType != container.GetType())
+				if( att.Type != container.GetType())
 				{
 					continue;
 				}
-				if( Activator.CreateInstance( type) is not EWMsgBoxCustomDrawer drawer)
+				if( Activator.CreateInstance( type) is not MsgBoxCustomDrawer drawer)
 				{
 					continue;
 				}
 				drawer.SetContainer( container);
 				drawer.closeAction = HideMsgBox;
-				AddMsgBox( att.id, drawer);
+				AddMsgBox( att.Id, drawer);
 			}
 		}
 		protected override void OnInit()
@@ -140,7 +136,11 @@ namespace MDI.Editor
 				}
 			}
 		}
-		readonly Dictionary<int, EWMsgBoxDrawer> m_MsgBoxs = new();
+		public bool IsShowing
+		{
+			get { return m_IsShowing; }
+		}
+		readonly Dictionary<int, MsgBoxDrawer> m_MsgBoxs = new();
 		bool m_IsShowing;
 		int m_CurrentShowId = -1;
 		object m_Obj;

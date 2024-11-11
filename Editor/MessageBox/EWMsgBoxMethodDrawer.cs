@@ -5,9 +5,9 @@ using System.Reflection;
 
 namespace MDI.Editor.Internal
 {
-	internal class EWMsgBoxMethodDrawer : EWMsgBoxDrawer
+	internal class MsgBoxMethodDrawer : MsgBoxDrawer
 	{
-		public EWMsgBoxMethodDrawer(MethodInfo method, object target, EWRectangle rectangle)
+		public MsgBoxMethodDrawer( MethodInfo method, object target, Rectangle rectangle)
 		{
 			if( method != null && target != null)
 			{
@@ -26,11 +26,11 @@ namespace MDI.Editor.Internal
 				m_DrawAction( rect, obj);
 			}
 		}
-		protected override EWRectangle Rectangle
+		protected override Rectangle Rectangle
 		{
 			get{ return m_Rectangle; }
 		}
         readonly DrawActionUseObj m_DrawAction;
-		EWRectangle m_Rectangle;
+		readonly Rectangle m_Rectangle;
 	}
 }

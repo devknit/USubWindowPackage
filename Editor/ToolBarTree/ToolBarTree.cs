@@ -7,19 +7,6 @@ namespace MDI.Editor
 {
 	public class ToolBarTree : EditorWindowComponentBase
 	{
-		public int count
-		{
-			get
-			{
-				if (m_Root == null)
-				{
-					return 0;
-				}
-				return m_Root.count;
-			}
-		}
-		ToolBarTreeNode m_Root;
-		
 		public ToolBarTree()
 		{
 		}
@@ -33,7 +20,7 @@ namespace MDI.Editor
 			{
 				return;
 			}
-			if( string.IsNullOrEmpty(text) != false)
+			if( string.IsNullOrEmpty( text) != false)
 			{
 				return;
 			}
@@ -89,15 +76,15 @@ namespace MDI.Editor
 		}
 		protected override void OnRegisterMethod( object container, MethodInfo method, object target)
 		{
-			object[] atts = method.GetCustomAttributes( typeof( EWToolBarAttribute), false);
+			object[] atts = method.GetCustomAttributes( typeof( ToolBarAttribute), false);
 			ParameterInfo[] parameters = method.GetParameters();
 			
 			if( atts != null && parameters.Length == 0)
 			{
-				for (int i1 = 0; i1 < atts.Length; ++i1)
+				for( int i1 = 0; i1 < atts.Length; ++i1)
 				{
-					EWToolBarAttribute att = (EWToolBarAttribute)atts[ i1];
-					InsertItem( att.menuItem, method, target, att.priority);
+					var att = atts[ i1] as ToolBarAttribute;
+					InsertItem( att.MenuItem, method, target, att.Priority);
 				}
 			}
 		}
@@ -108,5 +95,17 @@ namespace MDI.Editor
 		{
 			Sort();
 		}
+		public int Count
+		{
+			get
+			{
+				if( m_Root == null)
+				{
+					return 0;
+				}
+				return m_Root.Count;
+			}
+		}
+		ToolBarTreeNode m_Root;
 	}
 }

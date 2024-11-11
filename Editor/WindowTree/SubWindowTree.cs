@@ -19,17 +19,14 @@ namespace MDI.Editor.Internal
 		}
 		protected override void OnRegisterMethod( object container, MethodInfo method, object target)
 		{
-			object[] atts = method.GetCustomAttributes( typeof( EWSubWindowAttribute), false);
+			object[] atts = method.GetCustomAttributes( typeof( SubWindowAttribute), false);
 			
 			for( int i0 = 0; i0 < atts.Length; ++i0)
 			{
-				var att = atts[ i0] as EWSubWindowAttribute;
+				var att = atts[ i0] as SubWindowAttribute;
 				
-				object obj = SubWindowFactory.CreateSubWindow( 
-					att.windowStyle, att.title, att.iconPath,
-					att.active, method, target, att.toolbar, att.helpBox);
-				
-				if( obj is SubWindow window)
+				if( SubWindowFactory.CreateSubWindow( att.WindowStyle, att.Title, att.IconPath,
+					att.Active, method, target, att.Toolbar, att.HelpBox) is SubWindow window)
 				{
 					m_SubWindowList.Add( window);
 				}
@@ -45,21 +42,19 @@ namespace MDI.Editor.Internal
 			{
 				return;
 			}
-			object[] atts = type.GetCustomAttributes( typeof( EWSubWindowHandleAttribute), false);
+			object[] atts = type.GetCustomAttributes( typeof( SubWindowHandleAttribute), false);
 			
 			for( int i0 = 0; i0 < atts.Length; ++i0)
 			{
-                if( atts[ i0] is not EWSubWindowHandleAttribute att)
+                if( atts[ i0] is not SubWindowHandleAttribute att)
 				{
                     continue;
 				}
-                if( att.containerType != container.GetType())
+                if( att.ContainerType != container.GetType())
 				{
 					continue;
 				}
-				object obj = SubWindowFactory.CreateSubWindow(container, att.active, att.windowStyle, type);
-				
-				if (obj is SubWindow window)
+				if( SubWindowFactory.CreateSubWindow( container, att.Active, att.WindowStyle, type) is SubWindow window)
 				{
 					m_SubWindowList.Add( window);
 				}
@@ -86,7 +81,7 @@ namespace MDI.Editor.Internal
 			base.OnDisable();
 			SerializeAllWindow();
 		}
-		public void AddDynamicWindow( string title, string icon, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox, Delegate method)
+		public void AddDynamicWindow( string title, string icon, SubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox, Delegate method)
 		{
 			if( method == null)
 			{

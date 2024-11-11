@@ -40,7 +40,7 @@ namespace MDI.Editor
 		{
 			get;
 		}
-		public abstract EWSubWindowToolbarType toolBar
+		public abstract SubWindowToolbarType toolBar
 		{
 			get;
 		}

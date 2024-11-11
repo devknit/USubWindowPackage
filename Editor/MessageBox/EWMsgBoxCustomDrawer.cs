@@ -6,9 +6,9 @@ using MDI.Editor.Internal;
 namespace MDI.Editor
 {
 	[Serializable]
-	public abstract class EWMsgBoxCustomDrawer : CustomEWComponentDrawerBase
+	public abstract class MsgBoxCustomDrawer : CustomEWComponentDrawerBase
 	{
-		public abstract EWRectangle Recttangle
+		public abstract Rectangle Recttangle
 		{
 			get;
 		}

@@ -5,22 +5,26 @@ using MDI.Editor.Internal;
 namespace MDI.Editor
 {
 	[AttributeUsage( AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-	public class EWMsgBoxAttribute : Attribute
+	public class MsgBoxAttribute : Attribute
 	{
-		public EWMsgBoxAttribute( int id, float x = 0.2f, float y = 0.2f, float width = 0.6f, float height = 0.6f)
+		public MsgBoxAttribute( int id, float x = 0.2f, float y = 0.2f, float width = 0.6f, float height = 0.6f)
 		{
-			this.id = id;
-			Rectangle = new EWRectangle(x, y, width, height);
+			m_Id = id;
+			Rectangle = new Rectangle( x, y, width, height);
 		}
-		public EWMsgBoxAttribute( int id, float x, float y, float z, float w, bool anchorLeft, bool anchorRight, bool anchorTop, bool anchorBottom)
+		public MsgBoxAttribute( int id, float x, float y, float z, float w, bool anchorLeft, bool anchorRight, bool anchorTop, bool anchorBottom)
 		{
-			this.id = id;
-			Rectangle = new EWRectangle(x, y, z, w, anchorLeft, anchorRight, anchorTop, anchorBottom);
+			m_Id = id;
+			Rectangle = new Rectangle( x, y, z, w, anchorLeft, anchorRight, anchorTop, anchorBottom);
 		}
-		public EWRectangle Rectangle
+		public Rectangle Rectangle
 		{
 			get; private set;
 		}
-		public int id;
+		public int Id
+		{
+			get{ return m_Id; }
+		}
+		public int m_Id;
 	}
 }

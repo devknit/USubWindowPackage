@@ -6,43 +6,39 @@ namespace MDI.Editor
 {
 	public abstract class EditorWindowComponentBase
 	{
-		public bool IsInitialized
-		{
-			get; private set;
-		}
 		public void RegisterMethod( object container, MethodInfo method, object target)
 		{
-			if( IsInitialized == false)
+			if( m_Initialized == false)
 			{
 				OnRegisterMethod( container, method, target);
 			}
 		}
 		public void RegisterClass( object container, Type type)
 		{
-			if( IsInitialized == false)
+			if( m_Initialized == false)
 			{
 				OnRegisterClass( container, type);
 			}
 		}
 		public void Init()
 		{
-			if( IsInitialized == false)
+			if( m_Initialized == false)
 			{
 				OnInit();
-				IsInitialized = true;
+				m_Initialized = true;
 			}
 		}
 		public void Destroy()
 		{
-			if( IsInitialized != false)
+			if( m_Initialized != false)
 			{
 				OnDestroy();
-				IsInitialized = false;
+				m_Initialized = false;
 			}
 		}
 		public void Disable()
 		{
-			if( IsInitialized != false)
+			if( m_Initialized != false)
 			{
 				OnDisable();
 			}
@@ -59,5 +55,10 @@ namespace MDI.Editor
 		protected virtual void OnDisable()
 		{
 		}
+		public bool IsInitialized
+		{
+			get{ return m_Initialized; }
+		}
+		bool m_Initialized;
 	}
 }

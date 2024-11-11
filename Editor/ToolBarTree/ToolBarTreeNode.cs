@@ -13,10 +13,6 @@ namespace MDI.Editor.Internal
 {
 	internal class ToolBarTreeNode
 	{
-		public int count
-		{
-			get { return m_NodeList.Count; }
-		}
 		public ToolBarTreeNode( string text, int priority)
 		{
 			m_NodeList = new List<ToolBarTreeNode>();
@@ -31,7 +27,7 @@ namespace MDI.Editor.Internal
 			}
 			while( nodetext.Length > 0 && nodetext[ 0] == '/')
 			{
-				nodetext = nodetext.Substring( 1, nodetext.Length - 1);
+				nodetext = nodetext[ 1..];
 			}
 			if( string.IsNullOrEmpty( nodetext) != false)
 			{
@@ -43,8 +39,8 @@ namespace MDI.Editor.Internal
 			
 			if( first > 0)
 			{
-				lasttext = nodetext.Substring( first + 1);
-				nodetext = nodetext.Substring( 0, first);
+				lasttext = nodetext[ (first + 1)..];
+				nodetext = nodetext[ ..first];
 				
 				if( string.IsNullOrEmpty( lasttext) == false)
 				{
@@ -161,8 +157,7 @@ namespace MDI.Editor.Internal
 				}
 				if( m_Condition != null && m_ArgObj != null)
 				{
-					bool r = m_Condition( m_ArgObj);
-					menu.AddItem( new GUIContent( ntext), r, Invoke);
+					menu.AddItem( new GUIContent( ntext), m_Condition( m_ArgObj), Invoke);
 				}
 				else
 				{
@@ -202,6 +197,10 @@ namespace MDI.Editor.Internal
 					m_Action.DynamicInvoke();
 				}
 			}
+		}
+		public int Count
+		{
+			get { return m_NodeList.Count; }
 		}
         readonly string m_Text;
 		Delegate m_Action;

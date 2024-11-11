@@ -15,7 +15,7 @@ namespace MDI.Editor.Internal
 		{
 			get{ return m_ObjDrawer.Title; }
 		}
-		protected override EWSubWindowToolbarType toolBar
+		protected override SubWindowToolbarType toolBar
 		{
 			get { return m_ObjDrawer.toolBar; }
 		}

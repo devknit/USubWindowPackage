@@ -2,7 +2,7 @@
 
 namespace MDI.Editor
 {
-	public enum EWSubWindowIcon
+	public enum SubWindowIcon
 	{
 		None,
 		BuildSetting,
@@ -48,38 +48,62 @@ namespace MDI.Editor
 		Setting,
 		TimelineSelector,
 	}
-	public enum EWSubWindowToolbarType
+	public enum SubWindowToolbarType
 	{
 		None,
 		Normal,
 		Mini,
 	}
 	[AttributeUsage( AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-	public class EWSubWindowAttribute : Attribute
+	public class SubWindowAttribute : Attribute
 	{
-		public EWSubWindowAttribute( string title, EWSubWindowIcon icon = EWSubWindowIcon.None, bool active = true, SubWindowStyle windowStyle = SubWindowStyle.Default, EWSubWindowToolbarType toolbar = EWSubWindowToolbarType.None, SubWindowHelpBoxType helpBox = SubWindowHelpBoxType.None)
+		public SubWindowAttribute( string title, SubWindowIcon icon = SubWindowIcon.None, bool active = true, SubWindowStyle windowStyle = SubWindowStyle.Default, SubWindowToolbarType toolbar = SubWindowToolbarType.None, SubWindowHelpBoxType helpBox = SubWindowHelpBoxType.None)
 		{
-			this.title = title;
-			this.active = active;
-			this.windowStyle = windowStyle;
-			this.toolbar = toolbar;
-			this.helpBox = helpBox;
-			this.iconPath = GUIEx.GetIconPath( icon);
+			m_Title = title;
+			m_IconPath = GUIEx.GetIconPath( icon);
+			m_Active = active;
+			m_WindowStyle = windowStyle;
+			m_Toolbar = toolbar;
+			m_HelpBox = helpBox;
 		}
-		public EWSubWindowAttribute( string title, string icon, bool active = true, SubWindowStyle windowStyle = SubWindowStyle.Default, EWSubWindowToolbarType toolbar = EWSubWindowToolbarType.None, SubWindowHelpBoxType helpBox = SubWindowHelpBoxType.None)
+		public SubWindowAttribute( string title, string icon, bool active = true, SubWindowStyle windowStyle = SubWindowStyle.Default, SubWindowToolbarType toolbar = SubWindowToolbarType.None, SubWindowHelpBoxType helpBox = SubWindowHelpBoxType.None)
 		{
-			this.title = title;
-			this.active = active;
-			this.windowStyle = windowStyle;
-			this.toolbar = toolbar;
-			this.helpBox = helpBox;
-			this.iconPath = icon;
+			m_Title = title;
+			m_IconPath = icon;
+			m_Active = active;
+			m_WindowStyle = windowStyle;
+			m_Toolbar = toolbar;
+			m_HelpBox = helpBox;
 		}
-		public string title;
-		public bool active;
-		public SubWindowStyle windowStyle;
-		public string iconPath;
-		public EWSubWindowToolbarType toolbar;
-		public SubWindowHelpBoxType helpBox;
+		public string Title
+		{
+			get{ return m_Title; }
+		}
+		public string IconPath
+		{
+			get{ return m_IconPath; }
+		}
+		public bool Active
+		{
+			get{ return m_Active; }
+		}
+		public SubWindowStyle WindowStyle
+		{
+			get{ return m_WindowStyle; }
+		}
+		public SubWindowToolbarType Toolbar
+		{
+			get{ return m_Toolbar; }
+		}
+		public SubWindowHelpBoxType HelpBox
+		{
+			get{ return m_HelpBox; }
+		}
+        readonly string m_Title;
+        readonly string m_IconPath;
+        readonly bool m_Active;
+        readonly SubWindowStyle m_WindowStyle;
+		readonly SubWindowToolbarType m_Toolbar;
+		readonly SubWindowHelpBoxType m_HelpBox;
 	}
 }

@@ -7,28 +7,17 @@ namespace MDI.Editor.Internal
 {
 	internal class SubWindowNode
 	{
-		public virtual int Count
-		{
-			get{ return m_Childs.Count; }
-		}
-		public int Depth
-		{
-			get { return depth; }
-		}
-		public bool IsHorizontal
-		{
-			get { return isHorizontal; }
-		}
 		public SubWindowNode( bool horizontal, int depth)
 		{
-			this.isHorizontal = horizontal;
-			this.depth = depth;
+			m_IsHorizontal = horizontal;
+			m_Depth = depth;
 		}
 		public virtual void DrawGUI( Rect rect, System.Action repaintAction)
 		{
 			float offset = 0;
 			//Rect resizeRect = default(Rect);
-			if( isHorizontal != false)
+			
+			if( m_IsHorizontal != false)
 			{
 				for( int i0 = 0; i0 < m_Childs.Count; ++i0)
 				{
@@ -36,7 +25,7 @@ namespace MDI.Editor.Internal
 					{
 						Resize( i0 - 1, i0, new Rect( rect.x + offset - 2, rect.y, 4, rect.height));
 					}
-					int w = (int)(rect.width * m_Childs[ i0].weight);
+					int w = (int)(rect.width * m_Childs[ i0].Weight);
 					m_Childs[ i0].DrawGUI( new Rect( rect.x + offset, rect.y, w, rect.height), repaintAction);
 					
 					if( i0 >= 0 && i0 < m_Childs.Count)
@@ -53,7 +42,7 @@ namespace MDI.Editor.Internal
 					{
 						Resize( i0 - 1, i0, new Rect( rect.x, rect.y + offset - 2, rect.width, 4));
 					}
-					int h = (int)(rect.height * m_Childs[ i0].weight);
+					int h = (int)(rect.height * m_Childs[ i0].Weight);
 					m_Childs[ i0].DrawGUI( new Rect( rect.x, rect.y + offset, rect.width, h), repaintAction);
 					
 					if( i0 >= 0 && i0 < m_Childs.Count)
@@ -62,8 +51,8 @@ namespace MDI.Editor.Internal
 					}
 				}
 			}
-			DoResize(repaintAction);
-			this.rect = rect;
+			DoResize( repaintAction);
+			m_Rect = rect;
 		}
 		public virtual SubWindow DragWindow( Vector2 position)
 		{
@@ -96,23 +85,23 @@ namespace MDI.Editor.Internal
 		}
 		public virtual void Insert( SubWindowNode node, int index)
 		{
-			if( this.m_Childs.Count == 0)
+			if( m_Childs.Count == 0)
 			{
-				node.weight = 1;
-				node.depth = depth + 1;
-				node.isHorizontal = !isHorizontal;
-				this.m_Childs.Add( node);
+				node.Weight = 1;
+				node.Depth = m_Depth + 1;
+				node.IsHorizontal = !m_IsHorizontal;
+				m_Childs.Add( node);
 				return;
 			}
 			float w = 1.0f / (m_Childs.Count + 1);
 			float ew = w / m_Childs.Count;
-			node.weight = w;
-			node.depth = depth + 1;
-			node.isHorizontal = !isHorizontal;
+			node.Weight = w;
+			node.Depth = m_Depth + 1;
+			node.IsHorizontal = !m_IsHorizontal;
 			
 			for( int i0 = 0; i0 < m_Childs.Count; ++i0)
 			{
-				m_Childs[ i0].weight -= ew;
+				m_Childs[ i0].Weight -= ew;
 			}
 			if( index < 0 || index >= m_Childs.Count)
 			{
@@ -150,19 +139,19 @@ namespace MDI.Editor.Internal
 					
 					for( int i1 = 0; i1 < m_Childs.Count; ++i1)
 					{
-						m_Childs[ i1].weight += ew;
+						m_Childs[ i1].Weight += ew;
 					}
 				}
 			}
 		}
 		public virtual void AddWindow( SubWindow window, int index)
 		{
-			Insert( new SubWindowLeaf( window, !isHorizontal, depth + 1), index);
+			Insert( new SubWindowLeaf( window, !m_IsHorizontal, Depth + 1), index);
 		}
 		public virtual void Recalculate( int depth, bool isHorizontal)
 		{
-			this.depth = depth;
-			this.isHorizontal = isHorizontal;
+			m_Depth = depth;
+			m_IsHorizontal = isHorizontal;
 			
 			if( m_Childs.Count == 0)
 			{
@@ -172,15 +161,15 @@ namespace MDI.Editor.Internal
 			
 			for( int i0 = 0; i0 < m_Childs.Count; ++i0)
 			{
-				if( m_Childs[ i0].weight < kMinWeight)
+				if( m_Childs[ i0].Weight < kMinWeight)
 				{
-					m_Childs[ i0].weight = kMinWeight;
+					m_Childs[ i0].Weight = kMinWeight;
 				}
-				else if( m_Childs[ i0].weight > kMaxWeight)
+				else if( m_Childs[ i0].Weight > kMaxWeight)
 				{
-					m_Childs[ i0].weight = kMaxWeight;
+					m_Childs[ i0].Weight = kMaxWeight;
 				}
-				weightSum += m_Childs[ i0].weight;
+				weightSum += m_Childs[ i0].Weight;
 				m_Childs[ i0].Recalculate( depth + 1, !isHorizontal);
 			}
 			if( weightSum > 1.0f + Mathf.Epsilon || weightSum < 1.0f - Mathf.Epsilon)
@@ -189,16 +178,16 @@ namespace MDI.Editor.Internal
 				
 				for( int i0 = 0; i0 < m_Childs.Count; i0++)
 				{
-					m_Childs[ i0].weight += m;
+					m_Childs[ i0].Weight += m;
 				}
 			}
 		}
 		public virtual void WriteToLayoutCfg( XmlElement element, XmlDocument document, int index)
 		{
 			XmlElement currentElement = document.CreateElement( "SubWindowNode");
-			currentElement.SetAttribute( "Weight", weight.ToString());
-			currentElement.SetAttribute( "Depth", depth.ToString());
-			currentElement.SetAttribute( "Horizontal", isHorizontal.ToString());
+			currentElement.SetAttribute( "Weight", Weight.ToString());
+			currentElement.SetAttribute( "Depth", Depth.ToString());
+			currentElement.SetAttribute( "Horizontal", IsHorizontal.ToString());
 			currentElement.SetAttribute( "Index", index.ToString());
 			element.AppendChild( currentElement);
 			
@@ -215,9 +204,9 @@ namespace MDI.Editor.Internal
 			string weightStr = node.GetAttribute( "Weight");
 			string depthStr = node.GetAttribute( "Depth");
 			string horizontalStr = node.GetAttribute( "Horizontal");
-			weight = float.Parse( weightStr);
-			depth = int.Parse( depthStr);
-			isHorizontal = bool.Parse( horizontalStr);
+			m_Weight = float.Parse( weightStr);
+			m_Depth = int.Parse( depthStr);
+			m_IsHorizontal = bool.Parse( horizontalStr);
 			XmlNodeList nodes = node.ChildNodes;
 			
 			if( nodes.Count == 0)
@@ -251,7 +240,7 @@ namespace MDI.Editor.Internal
 		}
 		protected virtual bool TriggerAnchorArea( Vector2 position, int depth, SubWindow window, System.Action<SubWindow> preDropAction, System.Action postDropAction)
 		{
-			if (depth >= kMaxNodeDepth)
+			if( depth >= kMaxNodeDepth)
 			{
 				return false;
 			}
@@ -264,15 +253,15 @@ namespace MDI.Editor.Internal
 				{
 					return true;
 				}
-				if( isHorizontal != false)
+				if( IsHorizontal != false)
 				{
-					r = new Rect( rect.x + offset, rect.y, rect.width * m_Childs[ i0].weight * 0.2f, rect.height);
+					r = new Rect( m_Rect.x + offset, m_Rect.y, m_Rect.width * m_Childs[ i0].Weight * 0.2f, m_Rect.height);
 					
 					if( r.Contains( position) != false)
 					{
 						if( preDropAction == null)
 						{
-							tweenParam = GUIEx.ScaleTweenBox( r, tweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
+							m_TweenParam = GUIEx.ScaleTweenBox( r, m_TweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
 						}
 						else
 						{
@@ -281,14 +270,14 @@ namespace MDI.Editor.Internal
 						return true;
 					}
 					r = new Rect( 
-						rect.x + offset + rect.width * m_Childs[ i0].weight * 0.8f, 
-						rect.y, rect.width * m_Childs[ i0].weight * 0.2f, rect.height);
+						m_Rect.x + offset + m_Rect.width * m_Childs[ i0].Weight * 0.8f, 
+						m_Rect.y, m_Rect.width * m_Childs[ i0].Weight * 0.2f, m_Rect.height);
 					
 					if( r.Contains( position) != false)
 					{
 						if( preDropAction == null)
 						{
-							tweenParam = GUIEx.ScaleTweenBox( r, tweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
+							m_TweenParam = GUIEx.ScaleTweenBox( r, m_TweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
 						}
 						else
 						{
@@ -296,13 +285,13 @@ namespace MDI.Editor.Internal
 						}
 						return true;
 					}
-					r = new Rect( rect.x + offset, rect.y + rect.height * 0.8f, rect.width * m_Childs[ i0].weight, rect.height * 0.2f);
+					r = new Rect( m_Rect.x + offset, m_Rect.y + m_Rect.height * 0.8f, m_Rect.width * m_Childs[ i0].Weight, m_Rect.height * 0.2f);
 					
 					if( r.Contains( position) != false && m_Childs.Count > 1)
 					{
 						if( preDropAction == null)
 						{
-							tweenParam = GUIEx.ScaleTweenBox( r, tweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
+							m_TweenParam = GUIEx.ScaleTweenBox( r, m_TweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
 						}
 						else
 						{
@@ -310,17 +299,17 @@ namespace MDI.Editor.Internal
 						}
 						return true;
 					}
-					offset += m_Childs[ i0].weight*rect.width;
+					offset += m_Childs[ i0].Weight * m_Rect.width;
 				}
 				else
 				{
-					r = new Rect(rect.x, rect.y + offset, rect.width, rect.height * m_Childs[ i0].weight*0.2f);
+					r = new Rect( m_Rect.x, m_Rect.y + offset, m_Rect.width, m_Rect.height * m_Childs[ i0].Weight * 0.2f);
 					
 					if( r.Contains( position) != false)
 					{
 						if (preDropAction == null)
 						{
-							tweenParam = GUIEx.ScaleTweenBox( r, tweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
+							m_TweenParam = GUIEx.ScaleTweenBox( r, m_TweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
 						}
 						else
 						{
@@ -329,14 +318,14 @@ namespace MDI.Editor.Internal
 						return true;
 					}
 					r = new Rect( 
-						rect.x, rect.y + offset + rect.height * m_Childs[ i0].weight * 0.8f, 
-						rect.width, rect.height * m_Childs[ i0].weight * 0.2f);
+						m_Rect.x, m_Rect.y + offset + m_Rect.height * m_Childs[ i0].Weight * 0.8f, 
+						m_Rect.width, m_Rect.height * m_Childs[ i0].Weight * 0.2f);
 					
 					if( r.Contains( position) != false)
 					{
 						if( preDropAction == null)
 						{
-							tweenParam = GUIEx.ScaleTweenBox( r, tweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
+							m_TweenParam = GUIEx.ScaleTweenBox( r, m_TweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
 						}
 						else
 						{
@@ -344,13 +333,13 @@ namespace MDI.Editor.Internal
 						}
 						return true;
 					}
-					r = new Rect( rect.x + rect.width * 0.8f, rect.y + offset, rect.width * 0.2f, rect.height*m_Childs[ i0].weight);
+					r = new Rect( m_Rect.x + m_Rect.width * 0.8f, m_Rect.y + offset, m_Rect.width * 0.2f, m_Rect.height * m_Childs[ i0].Weight);
 					
 					if( r.Contains( position) != false && m_Childs.Count > 1)
 					{
 						if( preDropAction == null)
 						{
-							tweenParam = GUIEx.ScaleTweenBox( r, tweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
+							m_TweenParam = GUIEx.ScaleTweenBox( r, m_TweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
 						}
 						else
 						{
@@ -358,7 +347,7 @@ namespace MDI.Editor.Internal
 						}
 						return true;
 					}
-					offset += m_Childs[ i0].weight*rect.height;
+					offset += m_Childs[ i0].Weight * m_Rect.height;
 				}
 			}
 			return false;
@@ -395,12 +384,12 @@ namespace MDI.Editor.Internal
 					preDropAction( window);
 					m_Childs.RemoveAt( dropIndex);
 					
-                    var node = new SubWindowNode( !isHorizontal, depth + 1)
+                    var node = new SubWindowNode( !m_IsHorizontal, Depth + 1)
                     {
-                        weight = child.weight
+                        Weight = child.Weight
                     };
-                    child.isHorizontal = isHorizontal;
-					child.depth = node.depth + 1;
+                    child.IsHorizontal = m_IsHorizontal;
+					child.Depth = node.Depth + 1;
 					node.Insert( child, 0);
 					Insert( node, dropIndex);
 					node.AddWindow( window, -1);
@@ -410,7 +399,7 @@ namespace MDI.Editor.Internal
 		}
 		void Resize( int first, int second, Rect rect)
 		{
-			if( isHorizontal != false)
+			if( m_IsHorizontal != false)
 			{
 				EditorGUIUtility.AddCursorRect( rect, MouseCursor.ResizeHorizontal);
 			}
@@ -442,21 +431,21 @@ namespace MDI.Editor.Internal
 				{
 					float delta = 0;
 					
-					if( isHorizontal != false)
+					if( m_IsHorizontal != false)
 					{
-						delta = Event.current.delta.x / rect.width;
+						delta = Event.current.delta.x / m_Rect.width;
 					}
 					else
 					{
-						delta = Event.current.delta.y / rect.height;
+						delta = Event.current.delta.y / m_Rect.height;
 					}
-					float addW = m_Childs[ m_CurrentResizeFirstId].weight + delta;
-					float musW = m_Childs[ m_CurrentResizeSecondId].weight - delta;
+					float addW = m_Childs[ m_CurrentResizeFirstId].Weight + delta;
+					float musW = m_Childs[ m_CurrentResizeSecondId].Weight - delta;
 					
 					if( addW >= kMinWeight && addW <= kMaxWeight && musW >= kMinWeight && musW <= kMaxWeight)
 					{
-						m_Childs[ m_CurrentResizeFirstId].weight = addW;
-						m_Childs[ m_CurrentResizeSecondId].weight = musW;
+						m_Childs[ m_CurrentResizeFirstId].Weight = addW;
+						m_Childs[ m_CurrentResizeSecondId].Weight = musW;
 					}
 					if (repaintAct != null)
 					{
@@ -465,19 +454,50 @@ namespace MDI.Editor.Internal
 				}
 			}
 		}
+		public virtual int Count
+		{
+			get{ return m_Childs.Count; }
+		}
+		public bool IsHorizontal
+		{
+			get{ return m_IsHorizontal; }
+			protected set{ m_IsHorizontal = value; }
+		}
+		public float Weight
+		{
+			get{ return m_Weight;}
+			protected set{ m_Weight = value;}
+		}
+		public int Depth
+		{
+			get{ return m_Depth; }
+			protected set{ m_Depth = value; }
+		}
+		public Rect Rect
+		{
+			get{ return m_Rect; }
+			protected set{ m_Rect = value; }
+		}
+		public GUITweenParam TweenParam
+		{
+			get{ return m_TweenParam; }
+			protected set{ m_TweenParam = value; }
+		}
 		protected const int kMaxNodeDepth = 4;
+		const float kMaxWeight = 0.9f;
+		const float kMinWeight = 0.1f;
+		
         readonly List<SubWindowNode> m_Childs = new();
-		public float weight = 1;
-		protected int depth;
-		protected bool isHorizontal;
-		protected Rect rect;
-		protected GUITweenParam tweenParam;
+		float m_Weight = 1;
+		int m_Depth;
+		bool m_IsHorizontal;
+		Rect m_Rect;
+		GUITweenParam m_TweenParam;
 		//Rect m_OriginRect;
 		//float m_RectTweenTime;
 		bool m_IsDragging;
 		int m_CurrentResizeFirstId;
 		int m_CurrentResizeSecondId;
-		const float kMaxWeight = 0.9f;
-		const float kMinWeight = 0.1f;
+		
 	}
 }

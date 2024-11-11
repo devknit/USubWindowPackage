@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace MDI.Editor.Internal
 {
-	internal abstract class EWMsgBoxDrawer : EWComponentDrawerBase
+	internal abstract class MsgBoxDrawer : ComponentDrawerBase
 	{
-		protected abstract EWRectangle Rectangle
+		protected abstract Rectangle Rectangle
 		{
 			get;
 		}

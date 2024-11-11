@@ -1,19 +1,11 @@
 ﻿
 namespace MDI.Editor.Internal
 {
-	internal abstract class EWComponentDrawerBase
+	internal abstract class ComponentDrawerBase
 	{
-		public bool IsInitialized
-		{
-			get; private set;
-		}
-		public bool IsEnabled
-		{
-			get; private set;
-		}
 		public void Init()
 		{
-			if( IsInitialized != false)
+			if( m_Initialized != false)
 			{
 				return;
 			}
@@ -21,33 +13,44 @@ namespace MDI.Editor.Internal
 			{
 				return;
 			}
-			IsInitialized = true;
+			m_Initialized = true;
 		}
 		public void Enable()
 		{
-			if( IsEnabled == false)
+			if( m_Enabled == false)
 			{
 				OnEnable();
 			}
-			IsEnabled = true;
+			m_Enabled = true;
 		}
 		public void Disable()
 		{
-			if( IsEnabled != false)
+			if( m_Enabled != false)
 			{
 				OnDisable();
 			}
-			IsEnabled = false;
+			m_Enabled = false;
 		}
 		public void Destroy()
 		{
 			Disable();
 			OnDestroy();
-			IsInitialized = false;
+			m_Initialized = false;
 		}
 		protected abstract bool OnInit();
 		protected abstract void OnEnable();
 		protected abstract void OnDisable();
 		protected abstract void OnDestroy();
+		
+		public bool IsInitialized
+		{
+			get{ return m_Initialized; }
+		}
+		public bool IsEnabled
+		{
+			get{ return m_Enabled; }
+		}
+		bool m_Initialized;
+		bool m_Enabled;
 	}
 }

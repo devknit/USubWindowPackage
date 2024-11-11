@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace MDI.Editor.Internal
 {
-	internal class EWMsgBoxObjectDrawer : EWMsgBoxDrawer
+	internal class MsgBoxObjectDrawer : MsgBoxDrawer
 	{
-		public EWMsgBoxObjectDrawer( EWMsgBoxCustomDrawer drawer)
+		public MsgBoxObjectDrawer( MsgBoxCustomDrawer drawer)
 		{
 			m_Drawer = drawer;
 			
@@ -21,7 +21,7 @@ namespace MDI.Editor.Internal
 				
 				if( obj != null)
 				{
-					drawer = obj as EWMsgBoxCustomDrawer;
+					drawer = obj as MsgBoxCustomDrawer;
 					drawer.SetContainer( m_Drawer.Container);
 					drawer.closeAction = m_Drawer.closeAction;
 					m_Drawer = drawer;
@@ -62,7 +62,7 @@ namespace MDI.Editor.Internal
 		{
 			base.OnSerialize();
 			
-			if (m_Drawer == null)
+			if( m_Drawer == null)
 			{
 				return;
 			}
@@ -73,10 +73,10 @@ namespace MDI.Editor.Internal
 		{
 			return GetType().FullName + "." + m_Drawer.GetType().FullName + "." + m_Drawer.Container.GetType().FullName;
 		}
-		protected override EWRectangle Rectangle
+		protected override Rectangle Rectangle
 		{
 			get { return m_Drawer.Recttangle; }
 		}
-        readonly EWMsgBoxCustomDrawer m_Drawer;
+        readonly MsgBoxCustomDrawer m_Drawer;
 	}
 }

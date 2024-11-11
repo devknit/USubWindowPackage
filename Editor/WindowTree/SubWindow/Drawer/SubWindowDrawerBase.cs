@@ -4,13 +4,13 @@ using UnityEditor;
 
 namespace MDI.Editor.Internal
 {
-	internal abstract class SubWindowDrawerBase : EWComponentDrawerBase
+	internal abstract class SubWindowDrawerBase : ComponentDrawerBase
 	{
 		public abstract GUIContent Title
 		{
 			get;
 		}
-		protected abstract EWSubWindowToolbarType toolBar
+		protected abstract SubWindowToolbarType toolBar
 		{
 			get;
 		}
@@ -25,14 +25,14 @@ namespace MDI.Editor.Internal
 		
 		public Rect DrawToolBar( ref Rect rect)
 		{
-			if( toolBar == EWSubWindowToolbarType.Normal)
+			if( toolBar == SubWindowToolbarType.Normal)
 			{
 				var h = new Rect( rect.x, rect.y, rect.width, 18);
 				rect = new Rect( rect.x, rect.y + 18, rect.width, rect.height - 18);
 				GUI.Box( h, string.Empty, EditorStyles.toolbar);
 				return h;
 			}
-			else if( toolBar == EWSubWindowToolbarType.Mini)
+			else if( toolBar == SubWindowToolbarType.Mini)
 			{
 				var h = new Rect( rect.x, rect.y, rect.width, 15);
 				rect = new Rect( rect.x, rect.y + 15, rect.width, rect.height - 15);

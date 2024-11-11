@@ -6,7 +6,7 @@ using MDI.Editor.Internal;
 
 namespace MDI.Editor
 {
-	public class MDIEditorWindow : UnityEditor.EditorWindow, IMessageDispatcher
+	public class MDIEditorWindow : EditorWindow, IMessageDispatcher
 	{
 		public static T CreateWindow<T>( string title, object handle=null) where T : MDIEditorWindow
 		{
@@ -14,7 +14,7 @@ namespace MDI.Editor
 			
 			if( handle != null)
 			{
-				window.m_Handle = EWSerializationObject.CreateInstance( handle);
+				window.m_Handle = SerializationObject.CreateInstance( handle);
 			}
 			else
 			{
@@ -31,7 +31,7 @@ namespace MDI.Editor
 			
 			if( handle != null)
 			{
-				window.m_Handle = EWSerializationObject.CreateInstance( handle);
+				window.m_Handle = SerializationObject.CreateInstance( handle);
 			}
 			else
 			{
@@ -61,7 +61,7 @@ namespace MDI.Editor
 		#endif	
 			if( handle != null)
 			{
-				window.m_Handle = EWSerializationObject.CreateInstance( handle);
+				window.m_Handle = SerializationObject.CreateInstance( handle);
 			}
 			else
 			{
@@ -107,22 +107,22 @@ namespace MDI.Editor
 		}
 		public void AddDynamicSubWindow( string title, string icon, Action<Rect> action)
 		{
-			AddDynamicSubWindowInternal( title, icon, EWSubWindowToolbarType.None, SubWindowHelpBoxType.None, action);
+			AddDynamicSubWindowInternal( title, icon, SubWindowToolbarType.None, SubWindowHelpBoxType.None, action);
 		}
-		public void AddDynamicSubWindow( string title, EWSubWindowIcon icon, Action<Rect> action)
+		public void AddDynamicSubWindow( string title, SubWindowIcon icon, Action<Rect> action)
 		{
-			AddDynamicSubWindowInternal( title, icon, EWSubWindowToolbarType.None, SubWindowHelpBoxType.None, action);
+			AddDynamicSubWindowInternal( title, icon, SubWindowToolbarType.None, SubWindowHelpBoxType.None, action);
 		}
-		public void AddDynamicSubWindowWithToolBar( string title, string icon, EWSubWindowToolbarType toolbar, Action<Rect, Rect> action)
+		public void AddDynamicSubWindowWithToolBar( string title, string icon, SubWindowToolbarType toolbar, Action<Rect, Rect> action)
 		{
-			if( toolbar != EWSubWindowToolbarType.None)
+			if( toolbar != SubWindowToolbarType.None)
 			{
 				AddDynamicSubWindowInternal( title, icon, toolbar, SubWindowHelpBoxType.None, action);
 			}
 		}
-		public void AddDynamicSubWindowWithToolBar( string title, EWSubWindowIcon icon, EWSubWindowToolbarType toolbar, Action<Rect, Rect> action)
+		public void AddDynamicSubWindowWithToolBar( string title, SubWindowIcon icon, SubWindowToolbarType toolbar, Action<Rect, Rect> action)
 		{
-			if( toolbar != EWSubWindowToolbarType.None)
+			if( toolbar != SubWindowToolbarType.None)
 			{
 				AddDynamicSubWindowInternal( title, icon, toolbar, SubWindowHelpBoxType.None, action);
 			}
@@ -131,26 +131,26 @@ namespace MDI.Editor
 		{
 			if( helpBoxType != SubWindowHelpBoxType.None)
 			{
-				AddDynamicSubWindowInternal( title, icon, EWSubWindowToolbarType.None, helpBoxType, action);
+				AddDynamicSubWindowInternal( title, icon, SubWindowToolbarType.None, helpBoxType, action);
 			}
 		}
-		public void AddDynamicSubWindowWithHelpBox( string title, EWSubWindowIcon icon, SubWindowHelpBoxType helpBoxType, Action<Rect, Rect> action)
+		public void AddDynamicSubWindowWithHelpBox( string title, SubWindowIcon icon, SubWindowHelpBoxType helpBoxType, Action<Rect, Rect> action)
 		{
 			if (helpBoxType != SubWindowHelpBoxType.None)
 			{
-				AddDynamicSubWindowInternal(title, icon, EWSubWindowToolbarType.None, helpBoxType, action);
+				AddDynamicSubWindowInternal(title, icon, SubWindowToolbarType.None, helpBoxType, action);
 			}
 		}
-		public void AddDynamicFullSubWindow( string title, string icon, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpBoxType, Action<Rect, Rect, Rect> action)
+		public void AddDynamicFullSubWindow( string title, string icon, SubWindowToolbarType toolbar, SubWindowHelpBoxType helpBoxType, Action<Rect, Rect, Rect> action)
 		{
-			if( helpBoxType != SubWindowHelpBoxType.None && toolbar == EWSubWindowToolbarType.None)
+			if( helpBoxType != SubWindowHelpBoxType.None && toolbar == SubWindowToolbarType.None)
 			{
 				AddDynamicSubWindowInternal( title, icon, toolbar, helpBoxType, action);
 			}
 		}
-		public void AddDynamicFullSubWindow( string title, EWSubWindowIcon icon, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpBoxType, Action<Rect, Rect, Rect> action)
+		public void AddDynamicFullSubWindow( string title, SubWindowIcon icon, SubWindowToolbarType toolbar, SubWindowHelpBoxType helpBoxType, Action<Rect, Rect, Rect> action)
 		{
-			if( helpBoxType != SubWindowHelpBoxType.None && toolbar == EWSubWindowToolbarType.None)
+			if( helpBoxType != SubWindowHelpBoxType.None && toolbar == SubWindowToolbarType.None)
 			{
 				AddDynamicSubWindowInternal( title, icon, toolbar, helpBoxType, action);
 			}
@@ -338,11 +338,11 @@ namespace MDI.Editor
 		protected virtual void OnDrawToolBar()
 		{
 		}
-		private void AddDynamicSubWindowInternal( string title, EWSubWindowIcon icon, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox, Delegate action)
+		private void AddDynamicSubWindowInternal( string title, SubWindowIcon icon, SubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox, Delegate action)
 		{
 			AddDynamicSubWindowInternal( title, GUIEx.GetIconPath( icon), toolbar, helpbox, action);
 		}
-		private void AddDynamicSubWindowInternal( string title, string icon, EWSubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox, Delegate action)
+		private void AddDynamicSubWindowInternal( string title, string icon, SubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox, Delegate action)
 		{
 			if( m_WindowTree != null)
 			{
@@ -398,7 +398,7 @@ namespace MDI.Editor
 		}
 		
 		[SerializeField]
-		EWSerializationObject m_Handle;
+		SerializationObject m_Handle;
 		
 		SubWindowTree m_WindowTree;
 		ToolBarTree m_ToolbarTree;

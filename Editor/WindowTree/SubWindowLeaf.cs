@@ -22,7 +22,7 @@ namespace MDI.Editor.Internal
 			{
                 m_TweenParam = new GUITweenParam( false)
                 {
-                    tweenTime = 1
+                    TweenTime = 1
                 };
             }
 			else
@@ -34,16 +34,12 @@ namespace MDI.Editor.Internal
 		{
 			rect = new Rect( rect.x + 2, rect.y, rect.width - 4, rect.height - 2);
 			
-			if( m_TweenParam.isTweening != false)
+			if( m_TweenParam.IsTweening != false)
 			{
 				m_TweenParam = GUIEx.ScaleTweenBox( rect, m_TweenParam, 
 					m_SubWindows[ m_SelectSubWindow].Title, GUIStyleCache.GetStyle( "dragtabdropwindow"));
-				
-				if( repaintAction != null)
-				{
-					repaintAction();
-				}
-				return;
+                repaintAction?.Invoke();
+                return;
 			}
 			GUI.BeginGroup( rect, GUIStyleCache.GetStyle( "PreBackground"));
 			GUI.Box( new Rect( 0, 0, rect.width, 18), string.Empty, GUIStyleCache.GetStyle( "dockarea"));
@@ -70,18 +66,14 @@ namespace MDI.Editor.Internal
 				GUI.BeginGroup( new Rect( 0, 18, rect.width, rect.height - 18));
 				m_SubWindows[ m_SelectSubWindow].DrawSubWindow( new Rect( 0, 0, rect.width, rect.height - 18));
 				GUI.EndGroup();
-				
-				if( repaintAction != null)
-				{
-					repaintAction();
-				}
-			}
+                repaintAction?.Invoke();
+            }
 			if( m_SelectSubWindow >= 0 && m_SelectSubWindow < m_SubWindows.Count)
 			{
 				m_SubWindows[ m_SelectSubWindow].DrawToolBarExt( new Rect( rect.width - 100, 0, 100, 18));
 			}
 			GUI.EndGroup();
-			this.rect = rect;
+			Rect = rect;
 		}
 		public override bool ContainWindow( SubWindow window)
 		{
@@ -114,9 +106,9 @@ namespace MDI.Editor.Internal
 		public override void WriteToLayoutCfg( XmlElement element, XmlDocument document, int index)
 		{
 			XmlElement currentElement = document.CreateElement( "SubWindowLeaf");
-			currentElement.SetAttribute( "Weight", weight.ToString());
-			currentElement.SetAttribute( "Depth", depth.ToString());
-			currentElement.SetAttribute( "Horizontal", isHorizontal.ToString());
+			currentElement.SetAttribute( "Weight", Weight.ToString());
+			currentElement.SetAttribute( "Depth", Depth.ToString());
+			currentElement.SetAttribute( "Horizontal", IsHorizontal.ToString());
 			currentElement.SetAttribute( "Index", index.ToString());
 			element.AppendChild( currentElement);
 			
@@ -136,9 +128,9 @@ namespace MDI.Editor.Internal
 			string weightStr = node.GetAttribute( "Weight");
 			string depthStr = node.GetAttribute( "Depth");
 			string horizontalStr = node.GetAttribute( "Horizontal");
-			weight = float.Parse( weightStr);
-			depth = int.Parse( depthStr);
-			isHorizontal = bool.Parse( horizontalStr);
+			Weight = float.Parse( weightStr);
+			Depth = int.Parse( depthStr);
+			IsHorizontal = bool.Parse( horizontalStr);
 			XmlNodeList nodes = node.ChildNodes;
 			
 			if (nodes.Count == 0)
@@ -170,7 +162,7 @@ namespace MDI.Editor.Internal
 		}
 		public override SubWindow DragWindow( Vector2 position)
 		{
-			if( m_TweenParam.isTweening != false)
+			if( m_TweenParam.IsTweening != false)
 			{
 				return null;
 			}
@@ -178,7 +170,7 @@ namespace MDI.Editor.Internal
 			{
 				return null;
 			}
-			var rect = new Rect( this.rect.x + m_SelectSubWindow * 100, this.rect.y, 100, 17);
+			var rect = new Rect( Rect.x + m_SelectSubWindow * 100, Rect.y, 100, 17);
 			
 			if( rect.Contains( position) != false)
 			{
@@ -188,12 +180,12 @@ namespace MDI.Editor.Internal
 		}
 		public override void Recalculate( int depth, bool isHorizontal)
 		{
-			this.depth = depth;
-			this.isHorizontal = isHorizontal;
+			Depth = depth;
+			IsHorizontal = isHorizontal;
 		}
 		protected override bool TriggerAnchorArea( Vector2 position, int depth, SubWindow window, System.Action<SubWindow> preDropAction, System.Action postDropAction)
 		{
-			if( m_TweenParam.isTweening)
+			if( m_TweenParam.IsTweening)
 			{
 				return false;
 			}
@@ -205,24 +197,24 @@ namespace MDI.Editor.Internal
 			{
 				return false;
 			}
-			if( this.m_SubWindows.Contains(window) != false)
+			if( m_SubWindows.Contains( window) != false)
 			{
 				return false;
 			}
-			var rect = new Rect( this.rect.x, this.rect.y, this.rect.width, 17);
+			var rect = new Rect( Rect.x, Rect.y, Rect.width, 17);
 			
 			if( rect.Contains( position) != false)
 			{
 				if( preDropAction == null)
 				{
-					tweenParam = GUIEx.ScaleTweenBox( rect, tweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
+					TweenParam = GUIEx.ScaleTweenBox( rect, TweenParam, string.Empty, GUIStyleCache.GetStyle( "SelectionRect"));
 				}
 				else
 				{
 					if( preDropAction != null)
 					{
 						preDropAction( window);
-						this.AddWindow( window, 0);
+						AddWindow( window, 0);
 						postDropAction();
 					}
 				}
