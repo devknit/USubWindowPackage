@@ -9,7 +9,7 @@ namespace MDI.Editor
 {
 	public delegate void DrawActionUseObj( Rect rect, object obj);
 	
-	public class EditorWindowMsgBox : EditorWindowComponentBase
+	public class MsgBox : ComponentBase
 	{
 		public void AddMsgBox( int id, MethodInfo method, object target, Rectangle rectangle)
 		{

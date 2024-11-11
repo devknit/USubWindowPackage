@@ -5,7 +5,7 @@ using System;
 namespace MDI.Editor
 {
 	[Serializable]
-	public abstract class CustomEWComponentDrawerBase : IMessageDispatcher
+	public abstract class ComponentCustomDrawerBase : IMessageDispatcher
 	{
 		public void SetContainer( object container)
 		{

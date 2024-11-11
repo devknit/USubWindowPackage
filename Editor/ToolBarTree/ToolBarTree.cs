@@ -5,7 +5,7 @@ using MDI.Editor.Internal;
 
 namespace MDI.Editor
 {
-	public class ToolBarTree : EditorWindowComponentBase
+	public class ToolBarTree : ComponentBase
 	{
 		public ToolBarTree()
 		{

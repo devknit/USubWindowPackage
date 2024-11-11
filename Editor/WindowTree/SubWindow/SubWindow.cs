@@ -8,20 +8,6 @@ namespace MDI.Editor
 	[SubWindowStyle( SubWindowStyle.Default)]
 	public class SubWindow
 	{
-		public GUIContent Title
-		{
-			get{ return m_Drawer.Title; }
-		}
-		public bool DefaultOpen
-		{
-			get; private set;
-		}
-		public bool IsOpen
-		{
-			get; private set;
-		}
-		public bool isDynamic;
-		
 		public SubWindow( string title, string icon, bool defaultOpen, MethodInfo method, 
 			object target, SubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox)
 		{
@@ -38,7 +24,9 @@ namespace MDI.Editor
 		public string GetIndentifier()
 		{
 			if (m_Drawer != null)
-				return m_Drawer.GetID(isDynamic);
+			{
+				return m_Drawer.GetID( m_IsDynamic);
+			}
 			return "Unknown.UnknownId";
 		}
 		public void AddCloseEventListener( System.Action<SubWindow> onClose)
@@ -90,12 +78,30 @@ namespace MDI.Editor
 		}
 		public void SerializeSubWindow()
 		{
-			m_Drawer.Serialize( isDynamic);
+			m_Drawer.Serialize( m_IsDynamic);
 		}
 		protected virtual Rect DrawMainArea( Rect rect)
 		{
 			return rect;
 		}
+		public GUIContent Title
+		{
+			get{ return m_Drawer.Title; }
+		}
+		public bool DefaultOpen
+		{
+			get; private set;
+		}
+		public bool IsOpen
+		{
+			get; private set;
+		}
+		public bool IsDynamic
+		{
+			get{ return m_IsDynamic; }
+			set{ m_IsDynamic = value; }
+		}
+		bool m_IsDynamic;
 		System.Action<SubWindow> m_OnClose;
 		readonly SubWindowDrawerBase m_Drawer;
 	}

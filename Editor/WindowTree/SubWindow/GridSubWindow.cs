@@ -7,13 +7,6 @@ namespace MDI.Editor
 	[SubWindowStyle( SubWindowStyle.Grid)]
 	public class GridSubWindow : SubWindow
 	{
-		Texture2D m_PanelBackground;
-		Vector2 m_SceneViewPosition;
-		bool m_IsDragging;
-		const int kTileSize = 100;
-		int m_TileCountX = 0;
-		int m_TileCountY = 0;
-		
 		public GridSubWindow( 
 			string title, string icon, bool defaultOpen, MethodInfo method, 
 			object target, SubWindowToolbarType toolbar, SubWindowHelpBoxType helpbox) 
@@ -103,7 +96,7 @@ namespace MDI.Editor
 				Event.current.Use();
 			}
 		}
-		private void CheckBoard( Rect rect, int tileCountX, int tileCountY)
+		void CheckBoard( Rect rect, int tileCountX, int tileCountY)
 		{
 			if( m_SceneViewPosition.x < rect.width - tileCountX * 2 * kTileSize)
 			{
@@ -122,5 +115,11 @@ namespace MDI.Editor
 				m_SceneViewPosition.y = tileCountY * kTileSize;
 			}
 		}
+		Texture2D m_PanelBackground;
+		Vector2 m_SceneViewPosition;
+		bool m_IsDragging;
+		const int kTileSize = 100;
+		int m_TileCountX = 0;
+		int m_TileCountY = 0;
 	}
 }

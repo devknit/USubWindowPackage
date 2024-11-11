@@ -6,7 +6,7 @@ using MDI.Editor.Internal;
 namespace MDI.Editor
 {
 	[Serializable]
-	public abstract class MsgBoxCustomDrawer : CustomEWComponentDrawerBase
+	public abstract class MsgBoxCustomDrawer : ComponentCustomDrawerBase
 	{
 		public abstract Rectangle Recttangle
 		{

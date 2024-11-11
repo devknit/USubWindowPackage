@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace MDI.Editor
 {
-	public abstract class EditorWindowComponentBase
+	public abstract class ComponentBase
 	{
 		public void RegisterMethod( object container, MethodInfo method, object target)
 		{

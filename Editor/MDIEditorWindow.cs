@@ -274,7 +274,7 @@ namespace MDI.Editor
 			}
 			if( m_MsgBox == null)
 			{
-				m_MsgBox = new EditorWindowMsgBox();
+				m_MsgBox = new MsgBox();
 			}
 			Type[] handleTypes = null;
 			object[] handles = null;
@@ -289,7 +289,7 @@ namespace MDI.Editor
 				handleTypes = new Type[]{ GetType() };
 				handles = new object[]{ this };
 			}
-			EditorWindowComponentsInitializer.InitComponents( this, handleTypes, handles, m_WindowTree, m_ToolbarTree, m_MsgBox);
+			ComponentsInitializer.InitComponents( this, handleTypes, handles, m_WindowTree, m_ToolbarTree, m_MsgBox);
 		}
 		protected virtual void OnDrawGUI()
 		{
@@ -402,7 +402,7 @@ namespace MDI.Editor
 		
 		SubWindowTree m_WindowTree;
 		ToolBarTree m_ToolbarTree;
-		EditorWindowMsgBox m_MsgBox;
+		MsgBox m_MsgBox;
 		bool m_IsInitialized;
 	}
 }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace MDI.Editor.Internal
 {
-	internal class SubWindowTree : EditorWindowComponentBase
+	internal class SubWindowTree : ComponentBase
 	{
 		public SubWindowTree( Action repaint, string windowName, string handleName)
 		{
@@ -95,7 +95,7 @@ namespace MDI.Editor.Internal
 			}
             var window = new SubWindow( title, icon, true, method.Method, method.Target, toolbar, helpbox)
             {
-                isDynamic = true
+                IsDynamic = true
             };
             m_SubWindowList.Add( window);
 			window.Open();
@@ -115,7 +115,7 @@ namespace MDI.Editor.Internal
 			}
             var window = new SubWindow( true, drawer)
             {
-                isDynamic = true
+                IsDynamic = true
             };
             m_SubWindowList.Add( window);
 			window.Open();
@@ -191,7 +191,7 @@ namespace MDI.Editor.Internal
 				
 				for( int i0 = 0; i0 < m_SubWindowList.Count; ++i0)
 				{
-					if( m_SubWindowList[ i0].isDynamic)
+					if( m_SubWindowList[ i0].IsDynamic != false)
 					{
 						var win = m_SubWindowList[ i0];
 						

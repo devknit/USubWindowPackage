@@ -4,7 +4,7 @@ using System;
 namespace MDI.Editor
 {
 	[Serializable]
-	public abstract class SubWindowCustomDrawer : CustomEWComponentDrawerBase
+	public abstract class SubWindowCustomDrawer : ComponentCustomDrawerBase
 	{
 		public SubWindowHelpBox helpBox
 		{

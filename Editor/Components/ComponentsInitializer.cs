@@ -4,9 +4,9 @@ using System.Reflection;
 
 namespace MDI.Editor.Internal
 {
-	internal class EditorWindowComponentsInitializer
+	internal class ComponentsInitializer
 	{
-		public static void InitComponents( object container, Type[] types, object[] targets, params EditorWindowComponentBase[] tools)
+		public static void InitComponents( object container, Type[] types, object[] targets, params ComponentBase[] tools)
 		{
 			if( targets == null || types == null)
 			{
@@ -33,7 +33,7 @@ namespace MDI.Editor.Internal
 				RegisterInstanceMethod( container, types[ i0], targets[ i0], tools);
 			}
 			{
-				Type[] globalTypes = typeof( EditorWindowComponentsInitializer).Assembly.GetTypes();
+				Type[] globalTypes = typeof( ComponentsInitializer).Assembly.GetTypes();
 				
 				for( int i0 = 0; i0 < globalTypes.Length; ++i0)
 				{
@@ -52,7 +52,7 @@ namespace MDI.Editor.Internal
 				}
 			}
 		}
-		static void RegisterInstanceMethod( object container, Type type, object target, EditorWindowComponentBase[] tools)
+		static void RegisterInstanceMethod( object container, Type type, object target, ComponentBase[] tools)
 		{
 			MethodInfo[] methods = type.GetMethods( BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			
@@ -67,7 +67,7 @@ namespace MDI.Editor.Internal
 				}
 			}
 		}
-		static void RegisterClass( object container, Type type, EditorWindowComponentBase[] tools)
+		static void RegisterClass( object container, Type type, ComponentBase[] tools)
 		{
 			if( type.IsAbstract)
 			{
